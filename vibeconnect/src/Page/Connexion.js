@@ -1,14 +1,18 @@
 import React from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Css/Connexion.css";
+import { DescriptionSection } from "../Composant/DescriptionSection.js";
+import "./Css/Formulaire/Connexion.css";
+import "./Css/index.css";
+import "./Css/Formulaire/formulaire.css";
 
 export function Connexion() 
 {
   return (
     <div className="vibe-login-page">
       <Container className="d-flex justify-content-center align-items-center vh-100 container-vibe">
-        <Card className="login-card">
+        <Card className="card" id="cardConnexion">
           <Card.Body>
             <Form ClassName="FormulaireConnexion">
               <Form.Group className="mb-3" controlId="formUsername">
@@ -22,22 +26,17 @@ export function Connexion()
               <Button variant="danger" className="w-100 mb-3">
                 Se connecter
               </Button>
-
               <hr />
-
-              <Button variant="secondary" className="w-100">
-                Créer un nouveau compte
-              </Button>
+              
+               <Link to="/inscription" className="text-center">
+                    <Button variant="secondary" className="w-100">
+                        Créer un nouveau compte
+                    </Button>
+               </Link>
             </Form>
           </Card.Body>
         </Card>
-
-        <div className="vibe-side-text">
-          <h1 className="vibe-title">Vibe Connect</h1>
-          <p className="vibe-subtext">
-            Rejoignez VibeConnect : partagez des vibes positives et créez des connexions authentiques !
-          </p>
-        </div>
+       <DescriptionSection />
       </Container>
     </div>
   );

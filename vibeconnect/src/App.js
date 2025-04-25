@@ -1,4 +1,3 @@
-import './App.css';
 import { PiedDePage } from './Composant/PiedDePage';
 import React from 'react';
 import { BrowserRouter as Router, Routes,Route} from 'react-router-dom';
@@ -10,16 +9,14 @@ function App() {
             <Router>   
                 <div className="d-flex flex-column min-vh-100">
                     <Routes>
-                        <Route path="/" element={<Inscription />} />
-                        <Route path="/Connexion" element={<Connexion />} />
-                      
-                         
+                        <Route path="/" element={<Connexion />} />
+                        <Route path="/Connexion" element={<Connexion />} /> 
+                        <Route path="/Inscription" element={<Inscription />} /> 
                     </Routes>
                 </div>
                   <PiedDePage />
             </Router>
-     
-  );
+          );
 }
 
 export default App;
