@@ -1,0 +1,32 @@
+.page-bio {
+  font-family: 'Arial', sans-serif;
+}
+
+.left-section {
+  border-right: 1px solid #8e8e8e;
+  padding-right: 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+#ParagrapheBiographie{
+  height: 100vh;
+}
+
+.image-container {
+  display: inline-block;
+  width: 250px;
+  position: relative;
+  padding-bottom: 10px; 
+  border-bottom: 1px solid #8e8e8e; 
+}
+
+@media (max-width: 1000px) {
+ .image-container{
+  width: 200px;
+ }
+}

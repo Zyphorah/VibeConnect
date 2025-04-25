@@ -36,7 +36,7 @@ export function Connexion()
             </Form>
           </Card.Body>
         </Card>
-       <DescriptionSection />
+       <DescriptionSection/>
       </Container>
     </div>
   );

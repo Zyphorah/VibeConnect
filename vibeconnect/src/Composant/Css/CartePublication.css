@@ -1,0 +1,62 @@
+#carte-publication {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    width: 700px;    
+}
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .avatar-commentaire {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .image-publication {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .boite-commentaire 
+  {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bi {
+    font-size: 1.2rem;
+  }
+
+  #like-icon {
+    width: 40px; 
+    height: 40px; 
+    transition: transform 0.2s;
+  }
+
+  #like-icon:active {
+    transform: scale(0.85); 
+}
+  /*Responsive*/
+  @media (max-width: 780px)
+  {
+    #carte-publication 
+    {
+        width:500px;
+
+    }
+  }
+  @media (max-width: 550px)
+  {
+    #carte-publication 
+    {
+        width:400px;
+
+    }
+  }
