@@ -1,0 +1,126 @@
+/*Formulaire de connexion*/
+
+.vibe-login-page {
+    background-color: #d9d9d9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card { /* Boîte contenant les éléments de connexion */
+    width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-right: 60px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.login-card .form-control {
+    border-radius: 10px;
+    border: 1px solid #c1c1c1;
+    font-size: 1rem;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.login-card .form-control:focus {
+    border-color: #f44336; 
+    box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+}
+
+.login-card .btn-danger { /* Bouton de connexion */
+    background-color: #f44336;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-card .btn-danger:hover {
+    background-color: #d32f2f; 
+    transform: scale(0.98); 
+}
+
+.login-card .btn-secondary { /* Bouton de création d'un nouveau compte */
+    background-color: #757575;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-card .btn-secondary:hover { /*Bouton de création d'un nouveau compte hover*/
+    background-color: #616161; 
+    transform: scale(0.98);
+}
+
+.login-card hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+/* Texte de description */
+
+.vibe-side-text {
+    max-width: 300px;
+    text-align: left;
+    color: #333; 
+}
+
+.vibe-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #f44336;
+    margin-bottom: 10px;
+}
+
+.vibe-subtext {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container-vibe {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .login-card {
+        margin-top: 30px;
+        width: 90%; /* S'adapte à la largeur de l'écran */
+    }
+
+    .vibe-side-text {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .vibe-title {
+        font-size: 2rem;
+    }
+
+    .vibe-subtext {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 15px;
+    }
+
+    .vibe-title {
+        font-size: 1.8rem;
+    }
+
+    .vibe-subtext {
+        font-size: 0.8rem;
+    }
+}
