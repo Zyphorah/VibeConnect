@@ -2,3 +2,50 @@ body{
     background-color: #d9d9d9;
 }
 
+/*Application globale*/
+
+.form-control { /* Champ de saisie */
+    border-radius: 7px;
+    border: 1px solid #c1c1c1;
+    font-size: 1rem;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus { 
+    border-color: #f44336; 
+    box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+}
+
+/* Bouton */
+.btn-secondary { 
+    background-color: #757575;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-secondary:active { 
+    background-color: #616161; 
+    transform: scale(0.98);
+}
+
+.btn-danger { /* Bouton */
+    background-color: #f44336;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-danger:active {
+    background-color: #d32f2f; 
+    transform: scale(0.98); 
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f; 
+}

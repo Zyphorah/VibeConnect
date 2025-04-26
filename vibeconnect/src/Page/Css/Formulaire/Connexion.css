@@ -4,20 +4,6 @@
     width:400px;
 }
 
-.card .btn-secondary { /* Bouton de création d'un nouveau compte */
-    background-color: #757575;
-    border: none;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.card .btn-secondary:hover { /*Bouton de création d'un nouveau compte hover*/
-    background-color: #616161; 
-    transform: scale(0.98);
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     .container-vibe {
@@ -27,7 +13,7 @@
 
     .card {
         margin-top: 30px;
-        width: 90%; /* S'adapte à la largeur de l'écran */
+        width: 90%; 
     }
 
     .vibe-side-text {

@@ -5,6 +5,7 @@ import { Connexion } from './Page/Connexion';
 import { Inscription } from './Page/Inscription';
 import { PageProfil } from './Page/PageProfil';
 import {CartePublication} from './Composant/CartePublication';
+import { CarteCreationPublication } from './Composant/CarteCreationPublication';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                         <Route path="/Inscription" element={<Inscription />} /> 
                         <Route path="/Profil" element={<PageProfil/>} />
                         <Route path="/Publication" element={<CartePublication/>} />
+                        <Route path="/CreationPublication" element={<CarteCreationPublication/>} />
                     </Routes>
                 </div>
                   <PiedDePage />

@@ -1,0 +1,59 @@
+.arriere-plan {
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .carte-formulaire {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .zone-texte {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .barre-outils {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .bouton-outil {
+    padding: 0;
+    margin-right: 10px;
+  }
+  
+  .champ-texte {
+    border: none;
+    resize: none;
+    box-shadow: none;
+  }
+  
+  .zone-image {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .label-image {
+    cursor: pointer;
+  }
+  
+  .image-placeholder {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .image-preview {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .input-fichier {
+    display: none;
+  }
+  
