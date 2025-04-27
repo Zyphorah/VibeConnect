@@ -2,18 +2,18 @@
 .vibe-side-text {
     max-width: 300px;
     text-align: left;
-    color: #333; 
+    color: #333;
 }
 
 .vibe-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #f44336;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
 .vibe-subtext {
     font-size: 1rem;
-    color: #555;
+    color: #fefefe;
     line-height: 1.5;
 }

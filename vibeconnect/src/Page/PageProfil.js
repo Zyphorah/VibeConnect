@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import './Css/PageProfil.css';
 import Markdown from 'react-markdown';
+import {CartePublication} from '../Composant/CartePublication.js';
 
 const markdown = `
 ## Biographie
@@ -26,25 +27,28 @@ const markdown = `
 export function PageProfil() 
 {
   return (
-    <Container className="page-bio my-4">
-      <Row>
-        <Col md={4} className="text-center left-section">
-            <div className="image-container">
-                <Image 
-                src="Visage.png" 
-                roundedCircle 
-                className="profile-image mb-3"
-            />
-            </div>
-          <h3>Léo Dubois</h3>
-          <p><strong>Email :</strong> exemple@gmail.com</p>
-        </Col>
+    <>
+      <Container className="page-bio my-4">
+        <Row>
+          <Col md={4} className="text-center left-section">
+              <div className="image-container">
+                  <Image 
+                  src="Visage.png" 
+                  roundedCircle 
+                  className="profile-image mb-3"
+              />
+              </div>
+            <h3>Léo Dubois</h3>
+            <p><strong>Email :</strong> exemple@gmail.com</p>
+          </Col>
 
-        <Col id="ParagrapheBiographie" md={8}>
-            <Markdown>{markdown}</Markdown>
-        </Col>
-      </Row>
-    </Container>
+          <Col md={8}>
+              <Markdown>{markdown}</Markdown>
+          </Col>
+        </Row>
+      </Container>
+      <CartePublication/>
+    </>
   );
 }
 

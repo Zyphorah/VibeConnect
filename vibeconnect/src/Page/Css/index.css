@@ -5,8 +5,8 @@ body{
 /*Application globale*/
 
 .form-control { /* Champ de saisie */
-    border-radius: 7px;
-    border: 1px solid #c1c1c1;
+    border-radius: 15px;
+    border: 1px solid #f3f2f2;
     font-size: 1rem;
     padding: 12px;
     transition: border-color 0.3s ease;
@@ -23,7 +23,7 @@ body{
     border: none;
     font-weight: bold;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -37,7 +37,7 @@ body{
     border: none;
     font-weight: bold;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 100px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 

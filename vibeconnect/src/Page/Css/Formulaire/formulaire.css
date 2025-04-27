@@ -10,3 +10,100 @@
     margin: 20px 0;
     border: 1px solid #ddd;
 }
+/*teste*/
+
+.vibe-login-page {
+    background-color: #d9d9d9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    
+  .login-card {
+    display: flex;
+    background: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;             
+    width: 900px;
+    max-width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-section {
+    flex: 1;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .connexion-title {
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .input-field {
+    background-color: #f2f2f2;
+    border: none;
+    height: 45px;
+    padding-left: 15px;
+    font-size: 14px;
+    border-radius: 22px;
+  }
+  
+  .login-button {
+    background-color: #ff3333;
+    border-radius: 25px;
+    border: none;
+    height: 50px;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .create-account-link {
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .create-account-link:hover {
+    text-decoration: underline;
+  }
+  
+  .description-section {
+    flex: 1;
+    background: linear-gradient(to bottom, #ff3333, #ff6666);
+    color: white;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .description-section::before {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 100%;
+    top: -90px;
+    right: -90px;
+  }
+  
+  @media (max-width: 768px) {
+    .login-card {
+      flex-direction: column;
+    }
+    .description-section {
+      order: -1;
+      text-align: center;
+    }
+  }
+  

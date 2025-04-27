@@ -79,4 +79,5 @@ export function CarteCreationPublication() {
     </div>
   );
 };
+
 export default CarteCreationPublication;

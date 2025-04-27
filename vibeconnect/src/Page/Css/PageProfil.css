@@ -13,10 +13,6 @@
   object-fit: cover;
 }
 
-#ParagrapheBiographie{
-  height: 100vh;
-}
-
 .image-container {
   display: inline-block;
   width: 250px;
