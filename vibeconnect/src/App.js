@@ -6,6 +6,7 @@ import { Inscription } from './Page/Inscription';
 import { PageProfil } from './Page/PageProfil';
 import {CartePublication} from './Composant/CartePublication';
 import { CarteCreationPublication } from './Composant/CarteCreationPublication';
+import {Accueil} from './Page/Accueil';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/Profil" element={<PageProfil/>} />
                         <Route path="/Publication" element={<CartePublication/>} />
                         <Route path="/CreationPublication" element={<CarteCreationPublication/>} />
+                        <Route path="/Accueil" element={<Accueil/>} />
                     </Routes>
                 </div>
                   <PiedDePage />

@@ -1,69 +1,58 @@
 import { Requete } from './Requete';
+import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
 
 export class UsersAPI extends Requete 
 {
+    
+
     constructor(apiKey, apiUrl) {
         super(apiKey, apiUrl); 
     }
 
     async creerCompte(adresseMail, motDePasse, nomUtilisateur, firstName, lastName, profilePicture, bannerPicture, bio) {
-        try {
-            const response = await fetch(`${this.apiUrl}/Users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Dev-Api-Key': this.apiKey ,
-                },
-                body: JSON.stringify({
-                    username: nomUtilisateur,
-                    email: adresseMail,
-                    password: motDePasse,
-                    firstName: firstName,
-                    lastName: lastName,
-                    profilePicture: profilePicture,
-                    bannerPicture: bannerPicture,
-                    bio: bio,
-                }),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Error:', errorData);
-            } else {
-                const data = await response.json();
-                console.log('Success:', data);
-            }
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
+        return await this.faireRequete('/Users', 'POST', {
+            username: nomUtilisateur,
+            email: adresseMail,
+            password: motDePasse,
+            firstName,
+            lastName,
+            profilePicture,
+            bannerPicture,
+            bio,
+        });
     }
-    
-    async authentifierUtilisateur(userName, password) {
-        try {
-            const response = await fetch(`${this.apiUrl}/Users/authenticate`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Dev-Api-Key': this.apiKey,
-                },
-                body: JSON.stringify({
-                    userName: userName,
-                    password: password,
-                }),
-            });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Authentication error:', errorData);
-                return null;
-            } else {
-                const data = await response.json();
-                console.log('Authentication success:', data);
-                return data; 
-            }
-        } catch (error) {
-            console.error('Fetch error:', error);
-            return null;
-        }
+    async authentifierUtilisateur(userName, password) {
+        return await this.faireRequete('/Users/authenticate', 'POST', {
+            userName,
+            password,
+        });
+    }
+
+    async recupereUtilisateur() {
+        return await this.faireRequete('/Users', 'GET', null, true);
+    }
+
+    async mettreAJourUtilisateur(userName, email, firstName, lastName, profilePicture, bio, password) {
+        const userId = this.gestionLocalStorage.recuperer('id');
+        return await this.faireRequete(`/Users/${userId}`, 'PUT', {
+            userName,
+            email,
+            firstName,
+            lastName,
+            profilePicture,
+            bio,
+            password,
+        }, true);
+    }
+
+    async supprimerUtilisateur() {
+        const userId = this.gestionLocalStorage.recuperer('id');
+        const result = await this.faireRequete(`/Users/${userId}`, 'DELETE', null, true);
+        return result !== null;
+    }
+
+    async recupererDetailsUtilisateur(idUtilisateur) {
+        return await this.faireRequete(`/Users/${idUtilisateur}`, 'GET', null, true);
     }
 }
