@@ -1,5 +1,5 @@
 import { Requete } from './Requete';
-import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
+
 
 export class UsersAPI extends Requete 
 {

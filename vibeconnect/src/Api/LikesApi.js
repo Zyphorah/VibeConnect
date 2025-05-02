@@ -5,4 +5,15 @@ export class likesApi extends Requete
         super(apiKey, apiUrl); 
     }
 
+    async recupererLikesParId(id) {
+        return await this.faireRequete(`/Likes/${id}`, 'GET');
+    }
+
+    async ajouterLike(postId, userId) {
+        return await this.faireRequete(`/Likes/${postId}?userId=${encodeURIComponent(userId)}`, 'POST');
+    }
+
+    async supprimerLike(likeId) {
+        return await this.faireRequete(`/Likes/${likeId}`, 'DELETE');
+    }
 }

@@ -9,10 +9,12 @@ import "./Css/Formulaire/formulaire.css";
 import { UsersAPI } from "../Api/UsersAPI.js";
 import { GestionLocalStorage } from "../LocalStorage/GestionLocalStorage.js";
 import { useNavigate } from "react-router-dom";
+import { postsApi } from "../Api/PostsApi.js";
 
  var apiKey = 'API_RA7834F9B2E65C1D0';
  var apiUrl = 'https://api-427-gne0gxh8bwg4bbgp.canadacentral-01.azurewebsites.net';
  var userApi = new UsersAPI(apiKey, apiUrl);
+ var postsApiInstance = new postsApi(apiKey, apiUrl);
 
  var gestionLocalStorage = new GestionLocalStorage();
  
@@ -43,9 +45,28 @@ export function Connexion() {
       } 
     }
     //teste
-   var teste = await userApi.recupererDetailsUtilisateur("04d35bd1-636b-492a-9978-7a6b90c38f50");
-   console.log("test",teste);
+    var teste = await userApi.recupererDetailsUtilisateur("04d35bd1-636b-492a-9978-7a6b90c38f50");
+    console.log("test", teste);
 
+    //post teste
+    var nouveauPost = await postsApiInstance.creerPost("Contenu test", "teste");
+    console.log("Post créé :", nouveauPost);
+
+
+    var postRecupere = await postsApiInstance.recupererPostParId(600);
+    console.log("Post récupéré :", postRecupere);
+
+
+    var postMisAJour = await postsApiInstance.mettreAJourPost(600, "Nouveau contenuAdminasdf", "AASDasd");
+    console.log("Post mis à jour :", postMisAJour);
+
+
+    var postsDesAbonnements = await postsApiInstance.recupererPostsDesAbonnements("04d35bd1-636b-492a-9978-7a6b90c38f50");
+    console.log("Posts des abonnements :", postsDesAbonnements);
+
+    var postall = await postsApiInstance.recupererTousLesPosts();
+    console.log("Post all :", postall);
+   
   }
  
   return (

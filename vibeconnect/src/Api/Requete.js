@@ -1,24 +1,31 @@
+import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
+
 export class Requete
 {
   apiKey = null;
   apiUrl = null;
-  #gestionLocalStorage = new GestionLocalStorage();
-  
+  gestionLocalStorage = new GestionLocalStorage();
+
   constructor(apiKey, apiUrl) 
   {
     this.apiKey = apiKey;
     this.apiUrl = apiUrl;
   }
 
-  async faireRequete(endpoint, method = 'GET', body = null, requiresAuth = false) {
+  async faireRequete(endpoint, method = 'GET', body = null) {
     const headers = {
         'Content-Type': 'application/json',
         'X-Dev-Api-Key': this.apiKey,
     };
 
-    if (requiresAuth) {
-        headers.Authorization = 'Bearer ' + this.#gestionLocalStorage.recuperer('token');
-    }
+   
+        const token = this.gestionLocalStorage.recuperer('token');
+        if (!token) {
+            console.error('Token manquant ou invalide');
+            throw new Error('Token manquant ou invalide');
+        }
+        headers.Authorization = 'Bearer ' + token;
+ 
 
     try {
         const response = await fetch(`${this.apiUrl}${endpoint}`, {
@@ -38,7 +45,6 @@ export class Requete
         console.error(`Fetch error (${method} ${endpoint}):`, error);
         return null;
     }
-}
-
+  }
 }
 
