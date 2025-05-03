@@ -22,6 +22,7 @@ export function CartePublication({ post, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post?.content || "");
   const [editedImageUrl, setEditedImageUrl] = useState(post?.imageUrl || "");
+  const [showAllComments, setShowAllComments] = useState(false);
   const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new PostsApi(key, url));
   const imageUploader = new enregistrerImage();
 
@@ -73,7 +74,7 @@ export function CartePublication({ post, onDelete }) {
             src="like.png"
             alt="Like"
             id="like-icon"
-            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} // Pass `id` instead of `post.postId`
+            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} 
           />
           <span className="ms-1">{likes.length} J'aime</span>
           <span className="ms-3">{comments.length} commentaire(s)</span>
@@ -90,14 +91,20 @@ export function CartePublication({ post, onDelete }) {
 
         <div className="mt-3">
           {comments.length > 0 ? (
-            comments.map((comment, index) => <Commentaire key={index} data={comment} />)
+            (showAllComments ? comments : comments.slice(0, 3)).map((comment, index) => (
+              <Commentaire key={index} data={comment} />
+            ))
           ) : (
             <p className="text-muted">Aucun commentaire pour l'instant.</p>
           )}
         </div>
 
         <div className="mt-3 d-flex justify-content-between">
-          <Button variant="text">Afficher plus</Button>
+          {comments.length > 10 && (
+            <Button variant="text" onClick={() => setShowAllComments(!showAllComments)}>
+              {showAllComments ? "Afficher moins" : "Afficher plus"}
+            </Button>
+          )}
           {auteur?.id === currentUserId && (
             <div>
               <Button variant="text" className="text-primary me-2" onClick={() => setIsEditing(true)}>
