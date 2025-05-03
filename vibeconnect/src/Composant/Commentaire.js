@@ -1,6 +1,9 @@
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
 
 export function Commentaire({ data }) {
+  const gestionLocalStorage = new GestionLocalStorage();
+  const currentUserId = gestionLocalStorage.recuperer('id');
     return (
       <div>
         <div className="boite-commentaire mt-3 p-2">
@@ -16,7 +19,10 @@ export function Commentaire({ data }) {
             <span>{data.content || "Aucun contenu disponible"}</span>
             <div className="d-flex align-items-center">
               <i className="bi bi-hand-thumbs-up-fill text-primary"></i>
+              {}
+              {data.owner.id === currentUserId && (
               <Button variant="text" className="text-danger p-0">Supprimer</Button>
+              )}
             </div>
           </div>
         </div>

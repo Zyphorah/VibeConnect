@@ -1,8 +1,9 @@
 import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import './Css/PageProfil.css';
 import Markdown from 'react-markdown';
-import {CartePublication} from '../Composant/CartePublication.js';
+import { CartePublication } from '../Composant/CartePublication.js';
 
 const markdown = `
 ## Biographie
@@ -24,30 +25,36 @@ const markdown = `
 **Particularité :** Il porte toujours son t-shirt rouge porte-bonheur — c’est celui qu’il portait le jour où il a réparé une radio tout seul à l’âge de 7 ans.
 `;
 
-export function PageProfil() 
-{
+export function PageProfil() {
+  const location = useLocation(); // Get location object
+  const userData = location.state?.userData; // Retrieve passed JSON data
+
+  if (!userData) {
+    return <p>Aucune donnée utilisateur disponible.</p>;
+  }
+
   return (
     <>
       <Container className="page-bio my-4">
         <Row>
           <Col md={4} className="text-center left-section">
-              <div className="image-container">
-                  <Image 
-                  src="Visage.png" 
-                  roundedCircle 
-                  className="profile-image mb-3"
+            <div className="image-container">
+              <Image
+                src={userData.profilePicture || 'Visage.png'}
+                roundedCircle
+                className="profile-image mb-3"
               />
-              </div>
-            <h3>Léo Dubois</h3>
-            <p><strong>Email :</strong> exemple@gmail.com</p>
+            </div>
+            <h3>{userData.userName || 'Utilisateur inconnu'}</h3>
+            <p><strong>Email :</strong> {userData.email || 'Non disponible'}</p>
           </Col>
 
           <Col md={8}>
-              <Markdown>{markdown}</Markdown>
+            <Markdown>{userData.bio || markdown}</Markdown> {/* Use user bio or fallback to markdown */}
           </Col>
         </Row>
       </Container>
-      <CartePublication/>
+      <CartePublication utilisateur={userData} />
     </>
   );
 }
