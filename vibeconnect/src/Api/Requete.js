@@ -40,7 +40,8 @@ export class Requete
             return null;
         }
 
-        return await response.json();
+        const text = await response.text();
+        return text ? JSON.parse(text) : {};
     } catch (error) {
         console.error(`Fetch error (${method} ${endpoint}):`, error);
         return null;

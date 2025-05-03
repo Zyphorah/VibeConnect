@@ -1,3 +1,5 @@
+import { Requete } from './Requete';
+
 export class FollowersApi extends Requete
 {
     constructor(apiKey, apiUrl) 

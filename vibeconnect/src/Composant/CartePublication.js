@@ -1,18 +1,29 @@
 import React from 'react';
 import './Css/CartePublication.css';
 import { Card, Button, Form, Container, Image } from 'react-bootstrap';
+import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
+import { postsApi } from '../Api/PostsApi.js';
+import { ApiConfigContext } from '../Context/ApiContext.js';
+import { Commentaire } from './Commentaire.js'; 
 
-export function CartePublication({ post, utilisateur }) {
+
+export function CartePublication({ post, utilisateur, onDelete }) {
+  const { url, key } = React.useContext(ApiConfigContext);
+  const postApi = new postsApi(key, url);
+
   // Compatibilité : si post n'est pas fourni, utiliser utilisateur
   const donnees = post || utilisateur;
   if (!donnees) {
-    return <p>Publication non disponible.</p>;
+    return;
   }
 
   // Récupération des infos utilisateur pour l'affichage
   const auteur = donnees.owner || donnees;
   const nomAuteur = auteur.userName || "Utilisateur inconnu";
   const photoProfil = auteur.profilePicture || "https://via.placeholder.com/150";
+
+  const gestionLocalStorage = new GestionLocalStorage();
+  const currentUserId = gestionLocalStorage.recuperer('id');
 
   const contenu = donnees.content || "";
   const imagePublication = donnees.imageUrl || "https://via.placeholder.com/600x300";
@@ -21,7 +32,7 @@ export function CartePublication({ post, utilisateur }) {
   const datePublication = donnees.createdAt ? new Date(donnees.createdAt).toLocaleString() : "";
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100 container-vibe">
+    <Container className="d-flex justify-content-center align-items-center vh-10 container-vibe">
       <Card className="m-3 p-4" id="carte-publication">
         {/* Nom de l'utilisateur */}
         <div className="d-flex align-items-center mb-2">
@@ -52,24 +63,40 @@ export function CartePublication({ post, utilisateur }) {
           <span className="ms-3">{nombreCommentaires} commentaire(s)</span>
         </div>
 
-        <Form.Control
-          type="text"
-          placeholder="Ajouter un commentaire"
-          className="mt-3"
-        />
+        <Commentaire/>
         <div className="mt-3 d-flex justify-content-between">
           <Button variant="text">Afficher plus</Button>
           <div>
+            
+          {auteur.id === currentUserId && (
             <Button variant="text" className="text-primary me-2">
               Modifier
             </Button>
-            <Button variant="text" className="text-danger">
-              Supprimer
-            </Button>
+            )}
+            {auteur.id === currentUserId && (
+              <Button
+                variant="text"
+                className="text-danger"
+                onClick={() => {
+                  if (window.confirm("Voulez-vous supprimer cette publication ?")) {
+                    if (onDelete) {
+                      onDelete(donnees.id);
+                      
+                    } else {
+                      console.log("Suppression du post", donnees.id);
+                      postApi.supprimerPost(donnees.id);
+                    }
+                  }
+                }}
+              >
+                Supprimer
+              </Button>
+            )}
           </div>
         </div>
       </Card>
     </Container>
+
   );
 }
 

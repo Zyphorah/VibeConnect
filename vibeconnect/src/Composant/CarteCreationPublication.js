@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { FaBold, FaItalic, FaListUl } from 'react-icons/fa';
 import './Css/CarteCreationPublication.css'; 
+import { postsApi } from '../Api/PostsApi';
+import { ApiConfigContext } from '../Context/ApiContext.js';
+import CartePublication from './CartePublication.js';
+
 
 export function CarteCreationPublication() {
+
+  const { url, key } = useContext(ApiConfigContext);
   const [contenu, setContenu] = useState('');
   const [imageSelectionnee, setImageSelectionnee] = useState(null);
+  const api = new postsApi(key, url);
+ 
 
   const changerImage = (e) => {
     if (e.target.files.length > 0) {
-      setImageSelectionnee(URL.createObjectURL(e.target.files[0]));
+      const fichier = e.target.files[0];
+      setImageSelectionnee(URL.createObjectURL(fichier));
     }
   };
 
@@ -17,11 +26,23 @@ export function CarteCreationPublication() {
     setContenu(e.target.value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const nouveauPost = await api.creerPost(contenu, imageSelectionnee || '');
+      console.log('Post créé avec succès:', nouveauPost);
+      setContenu('');
+      setImageSelectionnee(null);
+    } catch (err) {
+      console.error("Erreur lors de la création du post", err);
+    }
+  };
+
   return (
     <div className="arriere-plan">
       <Card className="carte-formulaire">
         <h5>Ajouter une publication</h5>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <div className="zone-texte">
             <Row className="mb-2 barre-outils">
               <Col xs="auto">
@@ -45,7 +66,6 @@ export function CarteCreationPublication() {
               className="champ-texte"
             />
           </div>
-
           <Row className="mt-3">
             <Col xs={6}>
               <div className="zone-image">
@@ -76,6 +96,7 @@ export function CarteCreationPublication() {
           </Row>
         </Form>
       </Card>
+      <CartePublication data/>
     </div>
   );
 };

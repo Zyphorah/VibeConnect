@@ -1,13 +1,13 @@
 import { CartePublication } from '../Composant/CartePublication.js';
-import { UsersAPI } from '../Api/UsersAPI.js';
 import { useEffect, useState } from 'react';
-import { postsApi } from '../Api/PostsApi.js'; // Correction ici
+import { postsApi } from '../Api/PostsApi.js'; 
+import { ApiConfigContext } from '../Context/ApiContext.js';
+import { useContext } from 'react';
 
-var apiKey = 'API_RA7834F9B2E65C1D0';
-var apiUrl = 'https://api-427-gne0gxh8bwg4bbgp.canadacentral-01.azurewebsites.net/';
-var postApi = new postsApi(apiKey, apiUrl); // Correction ici
 
 export function Accueil() {
+    const { url, key } = useContext(ApiConfigContext);
+    var postApi = new postsApi(key, url); 
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {

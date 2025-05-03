@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react"; 
 import { Container, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,12 +7,13 @@ import "./Css/Formulaire/formulaire.css";
 import "./Css/index.css";
 import { DescriptionSection } from "../Composant/DescriptionSection.js";
 import { UsersAPI } from "../Api/UsersAPI.js";
-
- var apiKey = 'API_RA7834F9B2E65C1D0';
- var apiUrl = 'https://api-427-gne0gxh8bwg4bbgp.canadacentral-01.azurewebsites.net/'
- var userApi = new UsersAPI(apiKey, apiUrl);
+import { ApiConfigContext } from "../Context/ApiContext.js";
 
 export function Inscription() {
+
+  const { url, Key } = useContext(ApiConfigContext);
+  var userApi = new UsersAPI(Key, url);
+
   const [nom, setNom] = useState(" ");
   const [prenom, setPrenom] = useState(" ");
   const [username, setUsername] = useState(" ");

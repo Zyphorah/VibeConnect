@@ -1,3 +1,5 @@
+import { Requete } from './Requete';
+
 export class likesApi extends Requete
 {
     constructor(apiKey, apiUrl) 

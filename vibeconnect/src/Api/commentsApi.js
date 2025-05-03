@@ -1,3 +1,5 @@
+import { Requete } from './Requete';
+
 export class commentsApi extends Requete    
 {
     constructor(apiKey, apiUrl) 
