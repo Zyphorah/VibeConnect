@@ -4,7 +4,7 @@ import { Card, Button, Form, Container, Image } from 'react-bootstrap';
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
 import { postsApi } from '../Api/PostsApi.js';
 import { ApiConfigContext } from '../Context/ApiContext.js';
-import { Commentaire } from './Commentaire.js'; 
+import Commentaire from './Commentaire.js'; 
 
 
 export function CartePublication({ post, utilisateur, onDelete }) {
@@ -62,8 +62,22 @@ export function CartePublication({ post, utilisateur, onDelete }) {
           <span className="ms-1">{nombreLikes} J'aime</span>
           <span className="ms-3">{nombreCommentaires} commentaire(s)</span>
         </div>
+        
+        <Form.Control
+          type="text"
+          placeholder="Ajouter un commentaire"
+          className="mt-3"
+        />
+        <div className="mt-3">
+          {Array.isArray(donnees.comments) && donnees.comments.length > 0 ? (
+            donnees.comments.map((comment, index) => (
+              <Commentaire key={index} data={comment} />
+            ))
+          ) : (
+            <p className="text-muted">Aucun commentaire pour l'instant.</p>
+          )}
+        </div>
 
-        <Commentaire/>
         <div className="mt-3 d-flex justify-content-between">
           <Button variant="text">Afficher plus</Button>
           <div>

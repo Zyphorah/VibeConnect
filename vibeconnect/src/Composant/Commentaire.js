@@ -1,21 +1,19 @@
-import {Button, Form} from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
-export function Commentaire(data)
-{
-    return(
+export function Commentaire({ data }) {
+    return (
       <div>
-        <Form.Control
-                  type="text"
-                  placeholder="Ajouter un commentaire"
-                  className="mt-3"
-                />
-          <div className="boite-commentaire mt-3 p-2">
+        <div className="boite-commentaire mt-3 p-2">
           <div className="d-flex align-items-center mb-1">
-            <img src="https://cdn-icons-png.flaticon.com/512/194/194938.png" alt="Léo Dubois" className="avatar-commentaire" />
-            <strong className="ms-2">Léo Dubois</strong>
+            <img
+              src={data.owner.profilePicture || "https://via.placeholder.com/50"}
+              alt={data.owner.userName  || "Utilisateur"}
+              className="avatar-commentaire"
+            />
+            <strong className="ms-2">{data.owner.userName || "Utilisateur inconnu"}</strong>
           </div>
           <div className="d-flex justify-content-between align-items-center">
-            <span>Wow !</span>
+            <span>{data.content || "Aucun contenu disponible"}</span>
             <div className="d-flex align-items-center">
               <i className="bi bi-hand-thumbs-up-fill text-primary"></i>
               <Button variant="text" className="text-danger p-0">Supprimer</Button>
