@@ -5,7 +5,7 @@ import { DescriptionSection } from "../Composant/DescriptionSection.js";
 import { UsersAPI } from "../Api/UsersAPI.js";
 import { GestionLocalStorage } from "../LocalStorage/GestionLocalStorage.js";
 import { ApiConfigContext } from '../Context/ApiContext.js';
-import { GestionButtonConnexion } from "../Logic/GestionConnexion.js"; 
+import { GestionButtonConnexion } from "./Logic/GestionConnexion.js"; 
 import "./Css/Formulaire/Connexion.css";
 
 export function Connexion() {
