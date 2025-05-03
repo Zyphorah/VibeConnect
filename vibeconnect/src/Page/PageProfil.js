@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom'; 
 import './Css/PageProfil.css';
 import Markdown from 'react-markdown';
 import { CartePublication } from '../Composant/CartePublication.js';
@@ -26,10 +26,10 @@ const markdown = `
 `;
 
 export function PageProfil() {
-  const location = useLocation(); // Get location object
-  const userData = location.state?.userData; // Retrieve passed JSON data
+  const emplacement = useLocation();
+  const donneesUtilisateur = emplacement.state?.userData;
 
-  if (!userData) {
+  if (!donneesUtilisateur) {
     return <p>Aucune donnée utilisateur disponible.</p>;
   }
 
@@ -40,21 +40,21 @@ export function PageProfil() {
           <Col md={4} className="text-center left-section">
             <div className="image-container">
               <Image
-                src={userData.profilePicture || 'Visage.png'}
+                src={donneesUtilisateur.profilePicture || 'Visage.png'}
                 roundedCircle
                 className="profile-image mb-3"
               />
             </div>
-            <h3>{userData.userName || 'Utilisateur inconnu'}</h3>
-            <p><strong>Email :</strong> {userData.email || 'Non disponible'}</p>
+            <h3>{donneesUtilisateur.userName || 'Utilisateur inconnu'}</h3>
+            <p><strong>Email :</strong> {donneesUtilisateur.email || 'Non disponible'}</p>
           </Col>
 
           <Col md={8}>
-            <Markdown>{userData.bio || markdown}</Markdown> {/* Use user bio or fallback to markdown */}
+            <Markdown>{donneesUtilisateur.bio || markdown}</Markdown> 
           </Col>
         </Row>
       </Container>
-      <CartePublication utilisateur={userData} />
+      <CartePublication utilisateur={donneesUtilisateur} />
     </>
   );
 }

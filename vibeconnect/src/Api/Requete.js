@@ -17,8 +17,7 @@ export class Requete
         'Content-Type': 'application/json',
         'X-Dev-Api-Key': this.apiKey,
     };
-
-   
+    
         const token = this.gestionLocalStorage.recuperer('token');
         if (!token) {
             console.error('Token manquant ou invalide');
