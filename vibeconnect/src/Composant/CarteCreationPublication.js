@@ -5,7 +5,7 @@ import './Css/CarteCreationPublication.css';
 import { PostsApi } from '../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
-import { CarteCreationPublicationLogic } from '../Logic/CarteCreationPublicationLogic.js';
+import { CarteCreationPublicationLogic } from './Logic/CarteCreationPublicationLogic.js';
 
 export function CarteCreationPublication({ posts = [], setPosts }) { 
   const { url, key } = useContext(ApiConfigContext);

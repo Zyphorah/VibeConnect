@@ -5,13 +5,14 @@ import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import Commentaire from './Commentaire.js'; 
 import { useNavigate } from 'react-router-dom';
-import { PostLogic } from '../Logic/PostLogic.js';
+import { PostLogic } from './Logic/PostLogic.js';
 import { likesApi } from '../Api/LikesApi.js';
 import { commentsApi } from '../Api/commentsApi.js';
 import { PostsApi } from '../Api/PostsApi.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import FormulaireEdition from './FormulaireEdition';
-import { sauvegarderEdition } from '../Logic/CarteCreationPublicationLogic.js';
+import { sauvegarderEdition } from './Logic/CarteCreationPublicationLogic.js';
+
 
 export function CartePublication({ post, onDelete }) {
   const navigate = useNavigate(); 

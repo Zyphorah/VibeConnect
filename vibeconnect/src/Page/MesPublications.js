@@ -10,13 +10,16 @@ export function SesPublication() {
   return (
     <div>
       <CarteCreationPublication posts={posts} setPosts={setPosts} />
-      <Button
-        variant="danger"
-        onClick={supprimerTousLesPosts}
-        className="my-3"
-      >
-        Supprimer tous mes posts
-      </Button>
+
+      <div className="d-flex justify-content-center my-3">
+        <Button
+          variant="danger"
+          onClick={supprimerTousLesPosts}
+        >
+          Supprimer tous mes posts
+        </Button>
+      </div>
+      
       {posts.length > 0 ? (
         posts.map((post, index) => <CartePublication key={index} post={post} />)
       ) : (

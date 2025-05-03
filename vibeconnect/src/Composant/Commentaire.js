@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { ApiConfigContext } from '../Context/ApiContext.js'; 
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
 import { commentsApi } from '../Api/commentsApi'; 
-import { gererSupprimer } from '../Logic/gererSupprimer';
+import { gererSupprimer } from './Logic/gererSupprimer.js';
 
 export function Commentaire({ data, onCommentDeleted }) {
   const { url, key } = useContext(ApiConfigContext); 

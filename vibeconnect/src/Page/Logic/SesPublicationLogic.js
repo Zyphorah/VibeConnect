@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { PostsApi } from '../../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../../Context/ApiContext.js';
 import { GestionLocalStorage } from '../../LocalStorage/GestionLocalStorage.js';
-import { GestionPost } from '../../Logic/GestionPost.js';
+import { GestionPost } from '../../Composant/Logic/GestionPost.js';
 import Swal from 'sweetalert2';
 
 export function useSesPublicationLogic() {
