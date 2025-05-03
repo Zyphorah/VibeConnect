@@ -15,7 +15,7 @@ export class likesApi extends Requete
         return await this.faireRequete(`/Likes/${postId}?userId=${encodeURIComponent(userId)}`, 'POST');
     }
 
-    async supprimerLike(likeId) {
-        return await this.faireRequete(`/Likes/${likeId}`, 'DELETE');
+    async supprimerLike(postId) {
+        return await this.faireRequete(`/Likes/${postId}`, 'DELETE'); 
     }
 }

@@ -5,12 +5,12 @@ export class PostLogic {
     this.postApi = postApi;
   }
 
-  async gererToggleLike(likes, currentUserId, id) {
+  async gererToggleLike(likes, currentUserId, postId) { // Renamed `id` to `postId` for clarity
     const utilisateurAimeDeja = likes.some(like => like.userId === currentUserId);
     try {
       utilisateurAimeDeja
-        ? await this.likesApiInstance.supprimerLike(likes.find(like => like.userId === currentUserId)?.likeId)
-        : await this.likesApiInstance.ajouterLike(id, currentUserId);
+        ? await this.likesApiInstance.supprimerLike(postId) // Use `postId` for deletion
+        : await this.likesApiInstance.ajouterLike(postId, currentUserId); // Use `postId` for addition
     } catch (error) {
       console.error("Erreur lors de la gestion du like :", error);
     }

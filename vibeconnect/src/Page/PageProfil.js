@@ -82,7 +82,6 @@ export function PageProfil() {
                 src={donneesUtilisateur.profilePicture || 'Visage.png'}
                 roundedCircle
                 className="profile-image mb-3"
-                style={{ maxWidth: '150px', height: 'auto' }}
               />
             </div>
             <h3>{donneesUtilisateur.userName || 'Utilisateur inconnu'}</h3>

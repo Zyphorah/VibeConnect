@@ -73,7 +73,7 @@ export function CartePublication({ post, onDelete }) {
             src="like.png"
             alt="Like"
             id="like-icon"
-            onClick={() => postLogic.gererToggleLike(likes, currentUserId, post.postId)}
+            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} // Pass `id` instead of `post.postId`
           />
           <span className="ms-1">{likes.length} J'aime</span>
           <span className="ms-3">{comments.length} commentaire(s)</span>
