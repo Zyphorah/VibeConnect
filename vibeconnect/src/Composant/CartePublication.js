@@ -8,14 +8,21 @@ import { useNavigate } from 'react-router-dom';
 import { PostLogic } from '../Logic/PostLogic.js';
 import { likesApi } from '../Api/LikesApi.js';
 import { commentsApi } from '../Api/commentsApi.js';
-import { postsApi } from '../Api/PostsApi.js';
+import { PostsApi } from '../Api/PostsApi.js';
+import { enregistrerImage } from '../Api/enregistrerImage.js';
+import FormulaireEdition from './FormulaireEdition';
+import { sauvegarderEdition } from '../Logic/CarteCreationPublicationLogic.js';
 
 export function CartePublication({ post, onDelete }) {
   const navigate = useNavigate(); 
   const { url, key } = useContext(ApiConfigContext);
   const currentUserId = new GestionLocalStorage().recuperer('id');
   const [commentText, setCommentText] = useState("");
-  const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new postsApi(key, url));
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(post?.content || "");
+  const [editedImageUrl, setEditedImageUrl] = useState(post?.imageUrl || "");
+  const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new PostsApi(key, url));
+  const imageUploader = new enregistrerImage();
 
   if (!post) return null;
 
@@ -36,20 +43,37 @@ export function CartePublication({ post, onDelete }) {
           <h5 className="ms-2 mb-0">{nomAuteur}</h5>
         </div>
 
-        <h6 className="mb-3 fw-bold">{content || ""}</h6>
-
-        <Card.Img
-          variant="top"
-          src={imageUrl || "https://via.placeholder.com/600x300"}
-          className="image-publication"
-        />
+        {isEditing ? (
+          <FormulaireEdition
+            editedContent={editedContent}
+            setEditedContent={setEditedContent}
+            editedImageUrl={editedImageUrl}
+            setEditedImageUrl={setEditedImageUrl}
+            handleSaveEdit={() => sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl, setIsEditing, imageUploader, postLogic })}
+            setIsEditing={setIsEditing}
+          />
+        ) : (
+          <>
+            <h6 className="mb-3 fw-bold">{content || ""}</h6>
+            <Card.Img
+              variant="top"
+              src={imageUrl || "https://via.placeholder.com/600x300"}
+              className="image-publication"
+            />
+          </>
+        )}
 
         <div className="mt-2">
           <small className="text-muted">Publié le : {createdAt ? new Date(createdAt).toLocaleString() : ""}</small>
         </div>
 
         <div className="d-flex align-items-center mt-2">
-          <Image src="like.png" alt="Like" id="like-icon" onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} />
+          <Image
+            src="like.png"
+            alt="Like"
+            id="like-icon"
+            onClick={() => postLogic.gererToggleLike(likes, currentUserId, post.postId)}
+          />
           <span className="ms-1">{likes.length} J'aime</span>
           <span className="ms-3">{comments.length} commentaire(s)</span>
         </div>
@@ -75,7 +99,9 @@ export function CartePublication({ post, onDelete }) {
           <Button variant="text">Afficher plus</Button>
           {auteur?.id === currentUserId && (
             <div>
-              <Button variant="text" className="text-primary me-2">Modifier</Button>
+              <Button variant="text" className="text-primary me-2" onClick={() => setIsEditing(true)}>
+                Modifier
+              </Button>
               <Button variant="text" className="text-danger" onClick={() => postLogic.gererSupprimer(id, onDelete)}>
                 Supprimer
               </Button>

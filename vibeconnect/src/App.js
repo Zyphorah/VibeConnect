@@ -1,12 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { PiedDePage } from './Composant/PiedDePage';
 import Connexion from './Page/Connexion';
 import Inscription from './Page/Inscription';
 import PageProfil from './Page/PageProfil';
 import CartePublication from './Composant/CartePublication';
-import SesPublication from './Page/SesPublication';
+import SesPublication from './Page/MesPublications.js';
 import Accueil from './Page/Accueil';
+import { BarreNavigation } from './Composant/BarreNavigation.js';
+
+function MiseEnPageBarre() {
+  return (
+    <>
+      <BarreNavigation />
+      <Outlet />
+    </>
+  );
+}
 
 function App() {
   return (
@@ -16,10 +26,12 @@ function App() {
           <Route path="/" element={<Connexion />} />
           <Route path="/Connexion" element={<Connexion />} />
           <Route path="/Inscription" element={<Inscription />} />
-          <Route path="/Profil" element={<PageProfil />} />
-          <Route path="/Publication" element={<CartePublication />} />
-          <Route path="/SesPublications" element={<SesPublication />} />
-          <Route path="/Accueil" element={<Accueil />} />
+          <Route element={<MiseEnPageBarre />}>
+            <Route path="/Profil" element={<PageProfil />} />
+            <Route path="/Publication" element={<CartePublication />} />
+            <Route path="/MesPublications" element={<SesPublication />} />
+            <Route path="/Accueil" element={<Accueil />} />
+          </Route>
         </Routes>
       </div>
       <PiedDePage />

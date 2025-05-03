@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { FaBold, FaItalic, FaListUl } from 'react-icons/fa';
 import './Css/CarteCreationPublication.css'; 
-import { postsApi } from '../Api/PostsApi';
+import { PostsApi } from '../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import { CarteCreationPublicationLogic } from '../Logic/CarteCreationPublicationLogic.js';
@@ -11,7 +11,7 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
   const { url, key } = useContext(ApiConfigContext);
   const [contenu, setContenu] = useState('');
   const [imageSelectionnee, setImageSelectionnee] = useState(null);
-  const api = new postsApi(key, url);
+  const api = new PostsApi(key, url); 
   const imageApi = new enregistrerImage();
 
   const logic = new CarteCreationPublicationLogic(setImageSelectionnee, setPosts, setContenu);

@@ -23,3 +23,22 @@ export class CarteCreationPublicationLogic {
     }
   }
 }
+
+export async function sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl, setIsEditing, imageUploader, postLogic }) {
+  try {
+    let finalImageUrl = editedImageUrl;
+    // Recherche de l'élément file dans le formulaire
+    const fileInput = document.querySelector("#formFile input[type='file']");
+    if (fileInput && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      finalImageUrl = await imageUploader.enregistrerImage(file);
+    }
+
+    await postLogic.gererModifierPublication(id, editedContent, finalImageUrl, () => {
+      setEditedImageUrl(finalImageUrl); 
+      setIsEditing(false);
+    });
+  } catch (error) {
+    console.error("Erreur lors de la sauvegarde des modifications :", error);
+  }
+}

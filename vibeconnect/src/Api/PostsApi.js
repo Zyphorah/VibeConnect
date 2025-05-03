@@ -1,6 +1,6 @@
 import { Requete } from './Requete';
 
-export class postsApi extends Requete
+export class PostsApi extends Requete
 {
     constructor(apiKey, apiUrl) {
         super(apiKey, apiUrl); 
@@ -25,6 +25,13 @@ export class postsApi extends Requete
         return await this.faireRequete(`/Posts/${id}`, 'PUT', {
             content: contenu,
             imageUrl: urlImage,
+        });
+    }
+
+    async mettreAJourPublication(id, content, imageUrl) {
+        return await this.faireRequete(`/Posts/${id}`, 'PUT', {
+            content: content,
+            imageUrl: imageUrl,
         });
     }
 

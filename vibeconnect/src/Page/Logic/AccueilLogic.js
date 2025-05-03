@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import { postsApi } from '../../Api/PostsApi.js';
+import { PostsApi } from '../../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../../Context/ApiContext.js';
 
 export function useAccueilLogic() {
     const { url, key } = useContext(ApiConfigContext);
-    const apiPublication = new postsApi(key, url);
+    const apiPublication = new PostsApi(key, url); 
     const [publications, setPublications] = useState(null);
 
     useEffect(() => {

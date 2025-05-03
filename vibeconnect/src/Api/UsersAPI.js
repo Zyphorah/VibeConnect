@@ -3,8 +3,6 @@ import { Requete } from './Requete';
 
 export class UsersAPI extends Requete 
 {
-    
-
     constructor(apiKey, apiUrl) {
         super(apiKey, apiUrl); 
     }
@@ -33,8 +31,12 @@ export class UsersAPI extends Requete
         return await this.faireRequete('/Users', 'GET', null, true);
     }
 
-    async mettreAJourUtilisateur(userName, email, firstName, lastName, profilePicture, bio, password) {
-        const userId = this.gestionLocalStorage.recuperer('id');
+    async mettreAJourUtilisateur(userName, email, firstName, lastName, profilePicture, bio, password, bannerPicture) {
+        const userId = this.gestionLocalStorage.recuperer('id'); 
+        if (!userId) {
+            throw new Error("ID utilisateur introuvable dans le stockage local.");
+        }
+
         return await this.faireRequete(`/Users/${userId}`, 'PUT', {
             userName,
             email,
@@ -43,6 +45,7 @@ export class UsersAPI extends Requete
             profilePicture,
             bio,
             password,
+            bannerPicture,
         }, true);
     }
 

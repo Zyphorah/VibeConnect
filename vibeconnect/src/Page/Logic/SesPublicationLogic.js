@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { postsApi } from '../../Api/PostsApi.js';
+import { PostsApi } from '../../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../../Context/ApiContext.js';
 import { GestionLocalStorage } from '../../LocalStorage/GestionLocalStorage.js';
 import { GestionPost } from '../../Logic/GestionPost.js';
@@ -7,26 +7,30 @@ import Swal from 'sweetalert2';
 
 export function useSesPublicationLogic() {
   const { url, key } = useContext(ApiConfigContext);
-  const postApi = new postsApi(key, url);
+  const postApi = new PostsApi(key, url); 
   const gestionLocalStorage = new GestionLocalStorage();
   const userId = gestionLocalStorage.recuperer('id');
   const [posts, setPosts] = useState([]);
+  const [isPostsLoaded, setIsPostsLoaded] = useState(false); 
 
   useEffect(() => {
+    console.log(postApi); 
+
     const fetchPosts = async () => {
       try {
         const result = await postApi.recupererTousLesPosts();
         const userPosts = result.posts.filter(post => post.owner?.id === userId);
         setPosts(userPosts);
+        setIsPostsLoaded(true); 
       } catch (error) {
         console.error("Erreur lors de la récupération des posts:", error);
       }
     };
 
-    if (userId) {
+    if (userId && !isPostsLoaded) {
       fetchPosts();
     }
-  }, [postApi, userId]);
+  }, [postApi, userId, isPostsLoaded]); 
 
   const supprimerTousLesPosts = () => {
     Swal.fire({

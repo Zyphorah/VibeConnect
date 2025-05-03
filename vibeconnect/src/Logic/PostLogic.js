@@ -47,4 +47,13 @@ export class PostLogic {
       }
     });
   }
+
+  async gererModifierPublication(postId, content, imageUrl, onSuccess) {
+    try {
+      await this.postApi.mettreAJourPublication(postId, content, imageUrl); 
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      console.error("Erreur lors de la modification de la publication:", error);
+    }
+  }
 }
