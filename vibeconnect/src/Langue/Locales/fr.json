@@ -64,7 +64,8 @@
     "selectedImageAlt": "Image sélectionnée",
     "placeholderImageAlt": "Image par défaut",
     "chooseImage": "Choisir une image",
-    "publish": "Publier"
+    "publish": "Publier",
+    "errorMessage": "Veillez entrer un texte et choisir une image."
   },
   "cartePublication": {
     "unknownUser": "Utilisateur inconnu",

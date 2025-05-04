@@ -14,7 +14,7 @@ export function Commentaire({ data, onCommentDeleted, refresh }) {
 
   const handleDelete = () => {
     gererSupprimer(api, data, onCommentDeleted);
-    refresh();
+    refresh(); //bug a fix
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
-import { FaBold, FaItalic, FaListUl } from 'react-icons/fa';
+import { FaBold, FaItalic, FaListUl, FaBell } from 'react-icons/fa';
 import './Css/CarteCreationPublication.css'; 
 import { PostsApi } from '../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../Context/ApiContext.js';
@@ -13,16 +13,27 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
   const { url, key } = useContext(ApiConfigContext);
   const [contenu, setContenu] = useState('');
   const [imageSelectionnee, setImageSelectionnee] = useState(null);
+  const [messageErreur, setMessageErreur] = useState(''); // État pour afficher un message d'erreur
   const api = new PostsApi(key, url); 
   const imageApi = new enregistrerImage();
 
   const logic = new CarteCreationPublicationLogic(setImageSelectionnee, setPosts, setContenu);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!contenu.trim() || !imageSelectionnee) {
+      setMessageErreur(t('carteCreationPublication.errorMessage')); 
+      return;
+    }
+    setMessageErreur(''); // Réinitialiser le message d'erreur si tout est valide
+    logic.gererSubmit(e, contenu, imageSelectionnee, imageApi, api, posts);
+  };
+
   return (
     <div className="arriere-plan">
       <Card className="carte-formulaire">
         <h5>{t('carteCreationPublication.addPost')}</h5>
-        <Form onSubmit={(e) => logic.gererSubmit(e, contenu, imageSelectionnee, imageApi, api, posts)}>
+        <Form onSubmit={handleSubmit}>
           <div className="zone-texte">
             <Row className="mb-2 barre-outils">
               <Col xs="auto">
@@ -72,6 +83,12 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
               </Button>
             </Col>
           </Row>
+          {messageErreur && ( // Affichage du message d'erreur
+            <div className="mt-3 text-danger d-flex align-items-center">
+              <FaBell className="me-2" />
+              <span>{messageErreur}</span>
+            </div>
+          )}
         </Form>
       </Card>
     </div>

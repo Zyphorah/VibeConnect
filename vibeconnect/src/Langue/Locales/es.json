@@ -64,7 +64,8 @@
     "selectedImageAlt": "Imagen seleccionada",
     "placeholderImageAlt": "Imagen predeterminada",
     "chooseImage": "Elegir una imagen",
-    "publish": "Publicar"
+    "publish": "Publicar",
+    "errorMessage": "Por favor, ingrese un texto y elija una imagen."
   },
   "cartePublication": {
     "unknownUser": "Usuario desconocido",
@@ -78,6 +79,7 @@
     "showLess": "Mostrar menos",
     "edit": "Editar",
     "delete": "Eliminar"
+    
   },
   "commentaire": {
     "unknownUser": "Usuario desconocido",
