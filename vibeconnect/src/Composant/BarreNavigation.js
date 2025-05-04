@@ -40,6 +40,7 @@ export function BarreNavigation() {
                     <Navbar.Toggle aria-controls="navbarNav" />
                     <Navbar.Collapse id="navbarNav" className="justify-content-center flex-row">
                         <Nav>
+                        <Nav.Link as={Link} to="/Accueil" className="text-white" style={{ marginRight: '20px' }}>Accueil</Nav.Link>
                             <Nav.Link as={Link} to="/ToutesLesPublications" className="text-white" style={{ marginRight: '20px' }}>Toutes les publications</Nav.Link>
                             <Nav.Link as={Link} to="/MesPublications" className="text-white" style={{ marginRight: '20px' }}>Mes publications</Nav.Link>
                             <Nav.Link

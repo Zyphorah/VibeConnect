@@ -8,7 +8,7 @@ import CartePublication from './Composant/CartePublication';
 import SesPublication from './Page/MesPublications.js';
 import ToutesLesPublications from './Page/ToutesLesPublications.js';
 import { BarreNavigation } from './Composant/BarreNavigation.js';
-import {Accueil} from './Page/Accueil.js';
+import Accueil from './Page/Accueil.js'; // Correction: import par défaut pour Accueil
 
 
 function MiseEnPageBarre() {
@@ -33,7 +33,7 @@ function App() {
             <Route path="/Publication" element={<CartePublication />} />
             <Route path="/MesPublications" element={<SesPublication />} />
             <Route path="/ToutesLesPublications" element={<ToutesLesPublications />} />
-            <Route path="/Accueil" element={<Accueil />} />
+            <Route path="/Accueil" element={<Accueil />}/>
           </Route>
         </Routes>
       </div>
