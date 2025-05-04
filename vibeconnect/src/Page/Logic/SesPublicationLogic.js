@@ -11,13 +11,16 @@ export function useSesPublicationLogic(refresh) {
   const gestionLocalStorage = new GestionLocalStorage();
   const userId = gestionLocalStorage.recuperer('id');
   const [posts, setPosts] = useState([]);
+  const [isPostsLoaded, setIsPostsLoaded] = useState(false); // État pour suivre si les posts sont déjà chargés
 
   useEffect(() => {
     const fetchPosts = async () => {
+      if (isPostsLoaded && !refresh) return; // Éviter les requêtes inutiles
       try {
         const result = await postApi.recupererTousLesPosts();
         const userPosts = result.posts.filter(post => post.owner?.id === userId);
         setPosts(userPosts);
+        setIsPostsLoaded(true);
       } catch (error) {
         console.error("Erreur lors de la récupération des posts:", error);
       }
@@ -26,7 +29,7 @@ export function useSesPublicationLogic(refresh) {
     if (userId) {
       fetchPosts();
     }
-  }, [postApi, userId, refresh]); // Ajout de refresh comme dépendance
+  }, [postApi, userId, refresh, isPostsLoaded]); // Ajout de isPostsLoaded comme dépendance
 
   const supprimerTousLesPosts = () => {
     Swal.fire({

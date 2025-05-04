@@ -14,7 +14,7 @@ export function Commentaire({ data, onCommentDeleted, refresh }) {
 
   const handleDelete = () => {
     gererSupprimer(api, data, onCommentDeleted);
-    refresh(); //bug a fix
+    setTimeout(() => refresh(), 500); // Ajout d'un délai pour éviter les rafraîchissements inutiles
   };
 
   return (

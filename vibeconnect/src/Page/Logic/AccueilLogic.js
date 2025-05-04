@@ -6,23 +6,23 @@ export function useAccueilLogic(refresh, setRefresh) {
     const { url, key } = useContext(ApiConfigContext);
     const apiPublication = new PostsApi(key, url); 
     const [publications, setPublications] = useState(null);
+    const [isPublicationsLoaded, setIsPublicationsLoaded] = useState(false); // État pour suivre si les publications sont déjà chargées
 
     useEffect(() => {
         const recupererPublications = async () => {
+            if (isPublicationsLoaded && !refresh) return; // Éviter les requêtes inutiles
             try {
                 const resultat = await apiPublication.recupererTousLesPosts();
-                return resultat.posts || [];
+                setPublications(resultat.posts || []);
+                setIsPublicationsLoaded(true);
+                console.log("Publications récupérées:", resultat.posts);
             } catch (erreur) {
                 console.error("Erreur lors de la récupération des publications:", erreur);
-                return [];
             }
         };
 
-        recupererPublications().then((donnees) => {
-            setPublications(donnees);
-            console.log("Publications récupérées:", donnees);
-        });
-    }, [apiPublication, refresh]);
+        recupererPublications();
+    }, [apiPublication, refresh, isPublicationsLoaded]); // Ajout de isPublicationsLoaded comme dépendance
 
     return { publications, setRefresh };
 }

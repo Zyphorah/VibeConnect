@@ -59,6 +59,7 @@ export function PageProfil() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      if (isPostsLoaded) return; // Éviter les requêtes inutiles si les posts sont déjà chargés
       try {
         const result = await postApi.recupererTousLesPosts(true);
         const userPosts = result.posts.filter((post) => post.owner?.id === donneesUtilisateur.id);
@@ -68,8 +69,9 @@ export function PageProfil() {
         console.error('Erreur lors de la récupération des posts:', error);
       }
     };
+
     if (userId) fetchPosts();
-  }, [postApi, userId, donneesUtilisateur, refresh]); // Ajout de refresh comme dépendance
+  }, [postApi, userId, donneesUtilisateur, refresh, isPostsLoaded]); // Ajout de isPostsLoaded comme dépendance
 
   const handleEditClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
