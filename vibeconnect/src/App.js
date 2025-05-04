@@ -6,8 +6,10 @@ import Inscription from './Page/Inscription';
 import PageProfil from './Page/PageProfil';
 import CartePublication from './Composant/CartePublication';
 import SesPublication from './Page/MesPublications.js';
-import Accueil from './Page/Accueil';
+import ToutesLesPublications from './Page/ToutesLesPublications.js';
 import { BarreNavigation } from './Composant/BarreNavigation.js';
+import {Accueil} from './Page/Accueil.js';
+
 
 function MiseEnPageBarre() {
   return (
@@ -30,6 +32,7 @@ function App() {
             <Route path="/Profil" element={<PageProfil />} />
             <Route path="/Publication" element={<CartePublication />} />
             <Route path="/MesPublications" element={<SesPublication />} />
+            <Route path="/ToutesLesPublications" element={<ToutesLesPublications />} />
             <Route path="/Accueil" element={<Accueil />} />
           </Route>
         </Routes>
