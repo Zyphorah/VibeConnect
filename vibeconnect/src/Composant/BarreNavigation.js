@@ -49,7 +49,19 @@ export function BarreNavigation() {
                             >
                                 Profil
                             </Nav.Link>
-                            <Nav.Link as={Link} to="/Connexion" className="text-white" style={{ marginRight: '20px' }}>Déconnexion</Nav.Link>
+                        <Nav.Link 
+                            as={Link} 
+                            to="/Connexion" 
+                            className="text-white" 
+                            style={{ marginRight: '20px' }}
+                            onClick={() => {
+                                gestionLocalStorage.supprimer('token');
+                                gestionLocalStorage.supprimer('id');
+                                navigate("/Connexion");
+                            }}
+                        >
+                            Déconnexion
+                        </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                     

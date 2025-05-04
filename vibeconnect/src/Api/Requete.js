@@ -15,17 +15,16 @@ export class Requete
   async faireRequete(endpoint, method = 'GET', body = null, extraOptions = {}, extraHeaders = {}) {
     // Fusionner les headers par défaut avec les extraHeaders
     const headers = {
-        'Content-Type': 'application/json',
-        'X-Dev-Api-Key': this.apiKey,
-        ...extraHeaders
+      'Content-Type': 'application/json',
+      'X-Dev-Api-Key': this.apiKey,
+      ...extraHeaders
     };
     
     const token = this.gestionLocalStorage.recuperer('token');
-    if (!token) {
-      console.error('Token manquant ou invalide');
-      throw new Error('Token manquant ou invalide');
+    // Si un token est présent, l'ajouter, sinon ne rien faire
+    if (token) {
+      headers.Authorization = 'Bearer ' + token;
     }
-    headers.Authorization = 'Bearer ' + token;
  
     try {
       const response = await fetch(`${this.apiUrl}${endpoint}`, {
