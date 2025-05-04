@@ -65,7 +65,8 @@
     "placeholderImageAlt": "Imagen predeterminada",
     "chooseImage": "Elegir una imagen",
     "publish": "Publicar",
-    "errorMessage": "Por favor, ingrese un texto y elija una imagen."
+    "errorMessage": "Por favor, ingrese un texto y elija una imagen.",
+    "preview": "Vista previa"
   },
   "cartePublication": {
     "unknownUser": "Usuario desconocido",

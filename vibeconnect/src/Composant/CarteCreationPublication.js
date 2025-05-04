@@ -30,6 +30,19 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
     logic.gererSubmit(e, contenu, imageSelectionnee, imageApi, api, posts);
   };
 
+  const applyMarkdown = (syntax) => {
+    const textarea = document.getElementById('contenu-textarea');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = contenu.substring(start, end);
+
+    if (selectedText) {
+      const wrappedText = `${syntax}${selectedText}${syntax}`;
+      const newContent = contenu.substring(0, start) + wrappedText + contenu.substring(end);
+      setContenu(newContent);
+    }
+  };
+
   return (
     <div className="arriere-plan">
       <Card className="carte-formulaire">
@@ -38,14 +51,31 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
           <div className="zone-texte">
             <Row className="mb-2 barre-outils">
               <Col xs="auto">
-                {[FaBold, FaItalic, FaListUl].map((Icon, idx) => (
-                  <Button key={idx} variant="link" className="bouton-outil">
-                    <Icon />
-                  </Button>
-                ))}
+                <Button
+                  variant="link"
+                  className="bouton-outil"
+                  onClick={() => applyMarkdown('**')} // Appliquer le gras
+                >
+                  <FaBold />
+                </Button>
+                <Button
+                  variant="link"
+                  className="bouton-outil"
+                  onClick={() => applyMarkdown('_')} // Appliquer l'italique
+                >
+                  <FaItalic />
+                </Button>
+                <Button
+                  variant="link"
+                  className="bouton-outil"
+                  onClick={() => applyMarkdown('- ')} // Ajouter une liste
+                >
+                  <FaListUl />
+                </Button>
               </Col>
             </Row>
             <Form.Control 
+              id="contenu-textarea" // Ajout d'un ID pour cibler le textarea
               as="textarea" 
               rows={4} 
               placeholder={t('carteCreationPublication.textPlaceholder')}
@@ -54,9 +84,9 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
               className="champ-texte"
             />
             <div className="mt-3">
-             
+              <h6>{t('carteCreationPublication.preview')}</h6>
               <div className="preview-zone">
-                <Markdown>{contenu}</Markdown> 
+                <Markdown>{contenu}</Markdown> {/* Affichage de l'aperçu Markdown */}
               </div>
             </div>
           </div>
