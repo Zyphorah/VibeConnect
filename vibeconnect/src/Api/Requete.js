@@ -12,38 +12,40 @@ export class Requete
     this.apiUrl = apiUrl;
   }
 
-  async faireRequete(endpoint, method = 'GET', body = null) {
+  async faireRequete(endpoint, method = 'GET', body = null, extraOptions = {}, extraHeaders = {}) {
+    // Fusionner les headers par défaut avec les extraHeaders
     const headers = {
         'Content-Type': 'application/json',
         'X-Dev-Api-Key': this.apiKey,
+        ...extraHeaders
     };
     
-        const token = this.gestionLocalStorage.recuperer('token');
-        if (!token) {
-            console.error('Token manquant ou invalide');
-            throw new Error('Token manquant ou invalide');
-        }
-        headers.Authorization = 'Bearer ' + token;
+    const token = this.gestionLocalStorage.recuperer('token');
+    if (!token) {
+      console.error('Token manquant ou invalide');
+      throw new Error('Token manquant ou invalide');
+    }
+    headers.Authorization = 'Bearer ' + token;
  
-
     try {
-        const response = await fetch(`${this.apiUrl}${endpoint}`, {
-            method,
-            headers,
-            body: body ? JSON.stringify(body) : null,
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error(`Error (${method} ${endpoint}):`, errorData);
-            return null;
-        }
-
-        const text = await response.text();
-        return text ? JSON.parse(text) : {};
-    } catch (error) {
-        console.error(`Fetch error (${method} ${endpoint}):`, error);
+      const response = await fetch(`${this.apiUrl}${endpoint}`, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : null,
+        ...extraOptions,
+      });
+ 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(`Error (${method} ${endpoint}):`, errorData);
         return null;
+      }
+ 
+      const text = await response.text();
+      return text ? JSON.parse(text) : {};
+    } catch (error) {
+      console.error(`Fetch error (${method} ${endpoint}):`, error);
+      return null;
     }
   }
 }

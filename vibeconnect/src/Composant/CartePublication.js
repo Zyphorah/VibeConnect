@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './Css/CartePublication.css';
 import { Card, Button, Form, Container, Image } from 'react-bootstrap';
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
@@ -12,7 +12,8 @@ import { PostsApi } from '../Api/PostsApi.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import FormulaireEdition from './FormulaireEdition';
 import { sauvegarderEdition } from './Logic/CarteCreationPublicationLogic.js';
-
+import { FaBell } from 'react-icons/fa';
+import { FollowersApi } from '../Api/FollowersApi.js';
 
 export function CartePublication({ post, onDelete }) {
   const navigate = useNavigate(); 
@@ -23,14 +24,63 @@ export function CartePublication({ post, onDelete }) {
   const [editedContent, setEditedContent] = useState(post?.content || "");
   const [editedImageUrl, setEditedImageUrl] = useState(post?.imageUrl || "");
   const [showAllComments, setShowAllComments] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followerCount, setFollowerCount] = useState(0);
   const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new PostsApi(key, url));
   const imageUploader = new enregistrerImage();
-
-  if (!post) return null;
+  const followersApi = new FollowersApi(key, url);
 
   const { owner: auteur, content, imageUrl, likes = [], comments = [], createdAt, id } = post;
   const nomAuteur = auteur?.userName || "Utilisateur inconnu";
   const photoProfil = auteur?.profilePicture || "https://via.placeholder.com/150";
+
+  useEffect(() => {
+    if (auteur?.id && currentUserId !== auteur.id) {
+      // Récupérer le nombre de followers de l'auteur
+      followersApi.recupererFollowersParUtilisateur(auteur.id)
+        .then(data => {
+          setFollowerCount(data?.length || 0);
+        })
+        .catch(err => {
+          if (err.status === 404) {
+            setFollowerCount(0);
+          } else {
+            console.error(err);
+          }
+        });
+      // Vérifier si l'utilisateur courant suit l'auteur
+      followersApi.recupererSuivisParUtilisateur(currentUserId)
+        .then(data => {
+          const found = data?.some(user => user.id === auteur.id);
+          setIsFollowing(found);
+        })
+        .catch(err => console.error(err));
+    }
+  }, [auteur?.id, currentUserId]);
+
+  if (!post) return null;
+
+
+  // currentUserId (followerId, provenant du local storage) et auteur.id (followedId, de l'utilisateur suivi)
+  const toggleFollow = async () => {
+    if (!auteur.id) return;
+    try {
+      if (!isFollowing) {
+        // Ajouter un follow : followerId = currentUserId, followedId = auteur.id
+        await followersApi.ajouterSuivi(currentUserId, auteur.id);
+        console.log(currentUserId," et ", auteur.id);
+        setIsFollowing(true);
+        setFollowerCount(prev => prev + 1);
+      } else {
+        // Supprimer un follow : followerId = currentUserId, followedId = auteur.id
+        await followersApi.supprimerSuivi(currentUserId, auteur.id);
+        setIsFollowing(false);
+        setFollowerCount(prev => (prev > 0 ? prev - 1 : 0));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-10 container-vibe">
@@ -43,6 +93,15 @@ export function CartePublication({ post, onDelete }) {
             className="avatar"
           />
           <h5 className="ms-2 mb-0">{nomAuteur}</h5>
+          {currentUserId !== auteur.id && (
+            <>
+              <FaBell
+                onClick={toggleFollow}
+                style={{ cursor: 'pointer', color: isFollowing ? 'green' : 'grey', marginLeft: '10px' }}
+              />
+              <span className="ms-1">{followerCount} follow(s)</span>
+            </>
+          )}
         </div>
 
         {isEditing ? (

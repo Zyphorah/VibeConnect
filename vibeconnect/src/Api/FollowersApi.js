@@ -16,10 +16,13 @@ export class FollowersApi extends Requete
     }
 
     async ajouterSuivi(followerId, followedId) {
-        return await this.faireRequete('/Followers', 'POST', null, {
-            FollowerId: followerId,
-            FollowedId: followedId
-        });
+        return await this.faireRequete(
+            '/Followers',
+            'POST',
+            null,
+            null,
+            { FollowerId: followerId, FollowedId: followedId }
+        );
     }
 
     async supprimerSuivi(followerId, followedId) {
