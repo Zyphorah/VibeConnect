@@ -15,6 +15,7 @@ import { sauvegarderEdition } from './Logic/CarteCreationPublicationLogic.js';
 import { FaBell } from 'react-icons/fa';
 import { FollowersApi } from '../Api/FollowersApi.js';
 import { useTranslation } from 'react-i18next';
+import Markdown from 'react-markdown'; 
 
 export function CartePublication({ post, onDelete, refresh }) {
   const { t } = useTranslation();
@@ -116,7 +117,9 @@ export function CartePublication({ post, onDelete, refresh }) {
           />
         ) : (
           <>
-            <h6 className="mb-3 fw-bold">{content || ""}</h6>
+            <h6 className="mb-3 fw-bold">
+              <Markdown>{content || ""}</Markdown> {/* Affichage du contenu en Markdown */}
+            </h6>
             <Card.Img
               variant="top"
               src={imageUrl || "https://via.placeholder.com/600x300"}

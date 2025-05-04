@@ -7,6 +7,7 @@ import { ApiConfigContext } from '../Context/ApiContext.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import { CarteCreationPublicationLogic } from './Logic/CarteCreationPublicationLogic.js';
 import { useTranslation } from 'react-i18next';
+import Markdown from 'react-markdown'; // Import de Markdown
 
 export function CarteCreationPublication({ posts = [], setPosts }) { 
   const { t } = useTranslation();
@@ -52,6 +53,12 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
               onChange={(e) => setContenu(e.target.value)}
               className="champ-texte"
             />
+            <div className="mt-3">
+             
+              <div className="preview-zone">
+                <Markdown>{contenu}</Markdown> 
+              </div>
+            </div>
           </div>
           <Row className="mt-3">
             <Col xs={6}>
