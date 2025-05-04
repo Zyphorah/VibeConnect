@@ -25,7 +25,13 @@
     "emailPlaceholder": "Email address",
     "passwordPlaceholder": "Your password",
     "signupButton": "Sign up",
-    "alreadyHaveAccount": "Already have an account?"
+    "alreadyHaveAccount": "Already have an account?",
+    "errorAllFieldsRequired": "All fields are required.",
+    "errorInvalidEmail": "Invalid email address.",
+    "errorUsernameTaken": "The username is already taken.",
+    "errorEmailTaken": "The email address is already in use.",
+    "errorInvalidImage": "The provided image is not valid.",
+    "errorUnknown": "An unknown error occurred."
   },
   "mesPublications": {
     "deleteAllPosts": "Delete all my posts",

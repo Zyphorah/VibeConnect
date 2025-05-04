@@ -15,11 +15,41 @@ export function Inscription() {
   const { url, Key } = useContext(ApiConfigContext);
   var userApi = new UsersAPI(Key, url);
 
-  const [nom, setNom] = useState(" ");
-  const [prenom, setPrenom] = useState(" ");
-  const [username, setUsername] = useState(" ");
-  const [gmail, setMail] = useState(" ");
-  const [password, setPassword] = useState(" ");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [username, setUsername] = useState("");
+  const [gmail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [messageErreur, setMessageErreur] = useState("");
+
+  const handleSubmit = async () => {
+    if (!nom.trim() || !prenom.trim() || !username.trim() || !gmail.trim() || !password.trim()) {
+      setMessageErreur(t('inscription.errorAllFieldsRequired'));
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(gmail)) {
+      setMessageErreur(t('inscription.errorInvalidEmail'));
+      return;
+    }
+
+    setMessageErreur(""); // Réinitialiser le message d'erreur
+
+    try {
+      await userApi.creerCompte(gmail, password, username, nom, prenom, null, null, null);
+    } catch (error) {
+      if (error.message === "Le nom d'usager est déjà utilisé") {
+        setMessageErreur(t('inscription.errorUsernameTaken'));
+      } else if (error.message === "Courriel déjà utilisé par un autre usager") {
+        setMessageErreur(t('inscription.errorEmailTaken'));
+      } else if (error.message.includes("Download error or resource isn't a valid image")) {
+        setMessageErreur(t('inscription.errorInvalidImage'));
+      } else {
+        setMessageErreur(t('inscription.errorUnknown'));
+      }
+    }
+  };
   
   return (
     <div className="vibe-login-page">
@@ -46,9 +76,15 @@ export function Inscription() {
                 <Form.Control type="password" placeholder={t('inscription.passwordPlaceholder')} className="input-field" onChange={(e) => setPassword(e.target.value)} />
               </Form.Group>
 
-              <Button variant="danger" className="login-button mt-3" onClick={() => userApi.creerCompte(gmail, password, username, nom, prenom, null, null, null)}>
+              <Button variant="danger" className="login-button mt-3" onClick={handleSubmit}>
                 {t('inscription.signupButton')}
               </Button>
+
+              {messageErreur && (
+                <div className="mt-3 text-danger">
+                  {messageErreur}
+                </div>
+              )}
 
               <div className="text-center mt-3">
                 <Link to="/connexion" className="create-account-link">

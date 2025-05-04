@@ -25,7 +25,13 @@
     "emailPlaceholder": "Correo electrónico",
     "passwordPlaceholder": "Tu contraseña",
     "signupButton": "Registrarse",
-    "alreadyHaveAccount": "¿Ya tienes una cuenta?"
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "errorAllFieldsRequired": "Todos los campos son obligatorios.",
+    "errorInvalidEmail": "Dirección de correo electrónico no válida.",
+    "errorUsernameTaken": "El nombre de usuario ya está en uso.",
+    "errorEmailTaken": "La dirección de correo electrónico ya está en uso.",
+    "errorInvalidImage": "La imagen proporcionada no es válida.",
+    "errorUnknown": "Ocurrió un error desconocido."
   },
   "mesPublications": {
     "deleteAllPosts": "Eliminar todas mis publicaciones",

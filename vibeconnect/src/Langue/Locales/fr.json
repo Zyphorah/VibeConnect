@@ -25,7 +25,13 @@
     "emailPlaceholder": "Adresse mail",
     "passwordPlaceholder": "Votre mot de passe",
     "signupButton": "S'inscrire",
-    "alreadyHaveAccount": "Vous avez déjà un compte ?"
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "errorAllFieldsRequired": "Tous les champs doivent être remplis.",
+    "errorInvalidEmail": "Adresse e-mail invalide.",
+    "errorUsernameTaken": "Le nom d'utilisateur est déjà utilisé.",
+    "errorEmailTaken": "L'adresse e-mail est déjà utilisée.",
+    "errorInvalidImage": "L'image fournie n'est pas valide.",
+    "errorUnknown": "Une erreur inconnue est survenue."
   },
   "mesPublications": {
     "deleteAllPosts": "Supprimer tous mes posts",
