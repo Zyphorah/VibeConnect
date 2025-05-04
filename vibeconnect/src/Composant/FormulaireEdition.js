@@ -1,7 +1,10 @@
 import React from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export function FormulaireEdition({ editedContent, setEditedContent, editedImageUrl, handleSaveEdit, setIsEditing }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Form.Control
@@ -11,7 +14,7 @@ export function FormulaireEdition({ editedContent, setEditedContent, editedImage
         onChange={(e) => setEditedContent(e.target.value)}
       />
       <Form.Group id="formFile" className="mb-2">
-        <Form.Label>Modifier l'image</Form.Label>
+        <Form.Label>{t('formulaireEdition.editImage')}</Form.Label>
         <Form.Control type="file" />
       </Form.Group>
       {editedImageUrl && (
@@ -22,10 +25,10 @@ export function FormulaireEdition({ editedContent, setEditedContent, editedImage
         />
       )}
       <Button variant="success" className="me-2" onClick={handleSaveEdit}>
-        Sauvegarder
+        {t('formulaireEdition.save')}
       </Button>
       <Button variant="secondary" onClick={() => setIsEditing(false)}>
-        Annuler
+        {t('formulaireEdition.cancel')}
       </Button>
     </>
   );

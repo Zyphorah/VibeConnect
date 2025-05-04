@@ -6,8 +6,10 @@ import { PostsApi } from '../Api/PostsApi.js';
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import { CarteCreationPublicationLogic } from './Logic/CarteCreationPublicationLogic.js';
+import { useTranslation } from 'react-i18next';
 
 export function CarteCreationPublication({ posts = [], setPosts }) { 
+  const { t } = useTranslation();
   const { url, key } = useContext(ApiConfigContext);
   const [contenu, setContenu] = useState('');
   const [imageSelectionnee, setImageSelectionnee] = useState(null);
@@ -19,7 +21,7 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
   return (
     <div className="arriere-plan">
       <Card className="carte-formulaire">
-        <h5>Ajouter une publication</h5>
+        <h5>{t('carteCreationPublication.addPost')}</h5>
         <Form onSubmit={(e) => logic.gererSubmit(e, contenu, imageSelectionnee, imageApi, api, posts)}>
           <div className="zone-texte">
             <Row className="mb-2 barre-outils">
@@ -34,7 +36,7 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
             <Form.Control 
               as="textarea" 
               rows={4} 
-              placeholder="Entrez votre texte ici..."
+              placeholder={t('carteCreationPublication.textPlaceholder')}
               value={contenu}
               onChange={(e) => setContenu(e.target.value)}
               className="champ-texte"
@@ -47,17 +49,17 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
                   {imageSelectionnee ? (
                     <img 
                       src={URL.createObjectURL(imageSelectionnee)} 
-                      alt="Image sélectionnée" 
+                      alt={t('carteCreationPublication.selectedImageAlt')} 
                       className="image-preview" 
                     />
                   ) : (
                     <>
                       <img 
                         src="https://via.placeholder.com/50" 
-                        alt="placeholder" 
+                        alt={t('carteCreationPublication.placeholderImageAlt')} 
                         className="image-placeholder"
                       />
-                      <div>Choisir une image</div>
+                      <div>{t('carteCreationPublication.chooseImage')}</div>
                     </>
                   )}
                 </Form.Label>
@@ -66,7 +68,7 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
             </Col>
             <Col xs={6} className="d-flex align-items-end justify-content-end">
               <Button variant="primary" type="submit">
-                Publier
+                {t('carteCreationPublication.publish')}
               </Button>
             </Col>
           </Row>

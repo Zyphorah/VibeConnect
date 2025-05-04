@@ -2,8 +2,10 @@ import { CartePublication } from '../Composant/CartePublication.js';
 import { useAccueilLogic } from './Logic/AccueilLogic.js';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap'; 
+import { useTranslation } from 'react-i18next';
 
 export function ToutesLesPublications() {
+    const { t } = useTranslation();
     const { publications } = useAccueilLogic();
     const [visiblePosts, setVisiblePosts] = useState(5);
 
@@ -18,12 +20,12 @@ export function ToutesLesPublications() {
                     <CartePublication key={index} post={publication} />
                 ))
             ) : (
-                <p>Aucune publication disponible.</p>
+                <p>{t('toutesLesPublications.noPublications')}</p>
             )}
             {publications && visiblePosts < publications.length && (
                 <div className="d-flex justify-content-center mt-3">
                     <Button variant="primary" onClick={handleLoadMore}>
-                        Suivant
+                        {t('toutesLesPublications.loadMore')}
                     </Button>
                 </div>
             )}

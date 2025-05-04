@@ -3,8 +3,10 @@ import { GestionLocalStorage } from "../LocalStorage/GestionLocalStorage";
 import ApiContext from "../Context/ApiContext";
 import { CartePublication } from "../Composant/CartePublication";
 import { PostsApi } from "../Api/PostsApi";
+import { useTranslation } from "react-i18next";
 
 function Accueil() {
+  const { t } = useTranslation();
   const { url, key } = useContext(ApiContext);
   const [dataPosts, setDataUsers] = useState({});
   const gestionLocalStorage = new GestionLocalStorage();
@@ -19,22 +21,22 @@ function Accueil() {
           setDataUsers(data);
         })
         .catch((error) => {
-          console.error("Erreur lors de la récupération des posts des abonnements:", error);
+          console.error(t('accueil.errorFetchingPosts'), error);
         });
     } else {
-      console.log("Aucun utilisateur connecté.");
+      console.log(t('accueil.noUserConnected'));
     }
-  }, [id, key, url]);
+  }, [id, key, url, t]);
 
   return (
     <div id="fileActualite">
-      <h1 style={{ textAlign: "center" }}>File d'actualité de vos abonnements</h1>
+      <h1 style={{ textAlign: "center" }}>{t('accueil.title')}</h1>
       {dataPosts.posts && Array.isArray(dataPosts.posts) && dataPosts.posts.length > 0 ? (
         dataPosts.posts.map((publication, index) => (
           <CartePublication key={index} post={publication} />
         ))
       ) : (
-        <div>Aucun post à afficher.</div>
+        <div>{t('accueil.noPosts')}</div>
       )}
     </div>
   );

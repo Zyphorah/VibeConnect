@@ -1,0 +1,106 @@
+{
+  "connexion": {
+    "title": "Login",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "loginButton": "Log in",
+    "createAccount": "Create an account",
+    "changeLanguage": "Change language"
+  },
+  "description": {
+    "title": "Vibe Connect",
+    "subtext": "Join VibeConnect: share positive vibes and create authentic connections!"
+  },
+  "accueil": {
+    "title": "News feed of your subscriptions",
+    "noPosts": "No posts to display.",
+    "errorFetchingPosts": "Error fetching subscription posts:",
+    "noUserConnected": "No user connected."
+  },
+  "inscription": {
+    "title": "Create an account",
+    "nomPlaceholder": "Last name",
+    "prenomPlaceholder": "First name",
+    "usernamePlaceholder": "Your username",
+    "emailPlaceholder": "Email address",
+    "passwordPlaceholder": "Your password",
+    "signupButton": "Sign up",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "mesPublications": {
+    "deleteAllPosts": "Delete all my posts",
+    "noPosts": "No posts available."
+  },
+  "pageProfil": {
+    "error": "Error",
+    "imageUploadError": "An error occurred while uploading the image ({name}).",
+    "noUserData": "No user data available.",
+    "unknownUser": "Unknown user",
+    "email": "Email",
+    "notAvailable": "Not available",
+    "editProfile": "Edit profile",
+    "deleteAccount": "Delete account",
+    "noPosts": "No posts available.",
+    "cancel": "Cancel",
+    "saveChanges": "Save changes"
+  },
+  "toutesLesPublications": {
+    "noPublications": "No publications available.",
+    "loadMore": "Next"
+  },
+  "barreNavigation": {
+    "errorFetchingUser": "Error fetching user information:",
+    "unknownUser": "Unknown user",
+    "brand": "Vibe Connect",
+    "home": "Home",
+    "allPosts": "All posts",
+    "myPosts": "My posts",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "carteCreationPublication": {
+    "addPost": "Add a post",
+    "textPlaceholder": "Enter your text here...",
+    "selectedImageAlt": "Selected image",
+    "placeholderImageAlt": "Default image",
+    "chooseImage": "Choose an image",
+    "publish": "Publish"
+  },
+  "cartePublication": {
+    "unknownUser": "Unknown user",
+    "follows": "follow(s)",
+    "publishedOn": "Published on",
+    "likes": "like(s)",
+    "comments": "comment(s)",
+    "addComment": "Add a comment",
+    "noComments": "No comments yet.",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "commentaire": {
+    "unknownUser": "Unknown user",
+    "noContent": "No content available",
+    "delete": "Delete"
+  },
+  "formulaireEdition": {
+    "editImage": "Edit image",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "formulaireProfil": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "userName": "Username",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Leave blank to keep unchanged",
+    "bio": "Biography",
+    "profilePicture": "Profile picture",
+    "bannerPicture": "Banner"
+  },
+  "languageFrench": "French",
+  "languageEnglish": "English",
+  "languageSpanish": "Spanish"
+}

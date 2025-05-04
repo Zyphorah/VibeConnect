@@ -6,9 +6,22 @@ import { UsersAPI } from "../Api/UsersAPI.js";
 import { GestionLocalStorage } from "../LocalStorage/GestionLocalStorage.js";
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { GestionButtonConnexion } from "./Logic/GestionConnexion.js"; 
+import { useTranslation } from 'react-i18next'; 
+import "../Langue/i18n"; 
 import "./Css/Formulaire/Connexion.css";
 
+import fr from '../Langue/Locales/fr.json';
+import en from '../Langue/Locales/en.json';
+import es from '../Langue/Locales/es.json';
+
+import i18n from '../Langue/i18n';
+
+i18n.addResourceBundle('fr', 'translation', fr, true, true);
+i18n.addResourceBundle('en', 'translation', en, true, true);
+i18n.addResourceBundle('es', 'translation', es, true, true);
+
 export function Connexion() {
+  const { t } = useTranslation(); 
   const { url, Key } = useContext(ApiConfigContext);
   const userApi = new UsersAPI(Key, url);
   const gestionLocalStorage = new GestionLocalStorage();
@@ -21,12 +34,12 @@ export function Connexion() {
       <Container className="d-flex justify-content-center align-items-center vh-100 container-vibe">
         <div className="login-card">
           <div className="form-section">
-            <h2 className="connexion-title">connexion</h2>
+            <h2 className="connexion-title">{t('connexion.title')}</h2>
             <Form>
               <Form.Group controlId="formUsername">
                 <Form.Control
                   type="text"
-                  placeholder="Votre nom d’utilisateur"
+                  placeholder={t('connexion.usernamePlaceholder')}
                   className="input-field"
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -34,7 +47,7 @@ export function Connexion() {
               <Form.Group controlId="formPassword" className="mt-3">
                 <Form.Control
                   type="password"
-                  placeholder="Votre mot de passe"
+                  placeholder={t('connexion.passwordPlaceholder')}
                   className="input-field"
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -44,11 +57,11 @@ export function Connexion() {
                 className="login-button mt-4"
                 onClick={() => GestionButtonConnexion(userName, password, userApi, gestionLocalStorage, navigate)}
               >
-                Se connecter
+                {t('connexion.loginButton')}
               </Button>
               <div className="text-center mt-3">
                 <Link to="/inscription" className="create-account-link">
-                  Créer un compte
+                  {t('connexion.createAccount')}
                 </Link>
               </div>
             </Form>

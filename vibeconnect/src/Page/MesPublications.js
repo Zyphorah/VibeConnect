@@ -3,8 +3,10 @@ import { CartePublication } from '../Composant/CartePublication.js';
 import CarteCreationPublication from '../Composant/CarteCreationPublication.js';
 import { useSesPublicationLogic } from './Logic/SesPublicationLogic.js';
 import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export function SesPublication() {
+  const { t } = useTranslation();
   const { posts, setPosts, supprimerTousLesPosts } = useSesPublicationLogic();
 
   return (
@@ -16,14 +18,14 @@ export function SesPublication() {
           variant="danger"
           onClick={supprimerTousLesPosts}
         >
-          Supprimer tous mes posts
+          {t('mesPublications.deleteAllPosts')}
         </Button>
       </div>
       
       {posts.length > 0 ? (
         posts.map((post, index) => <CartePublication key={index} post={post} />)
       ) : (
-        <p>Aucun post disponible.</p>
+        <p>{t('mesPublications.noPosts')}</p>
       )}
     </div>
   );

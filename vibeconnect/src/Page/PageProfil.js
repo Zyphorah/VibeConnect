@@ -13,8 +13,10 @@ import FormulaireProfil from '../Composant/FormulaireProfil.js';
 import { handleDeleteAccount, handleSaveChanges } from './Logic/LogiqueProfil.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next';
 
 export function PageProfil() {
+  const { t } = useTranslation();
   const emplacement = useLocation();
   const donneesUtilisateur = emplacement.state?.userData;
   const { url, key } = useContext(ApiConfigContext);
@@ -42,7 +44,7 @@ export function PageProfil() {
         const imageUrl = await imageUploader.enregistrerImage(files[0]);
         setFormData(prev => ({ ...prev, [name]: imageUrl }));
       } catch (error) {
-        Swal.fire('Erreur', `Une erreur est survenue lors de l'upload de l'image (${name}).`, 'error');
+        Swal.fire(t('pageProfil.error'), t('pageProfil.imageUploadError', { name }), 'error');
       }
     }
   };
@@ -69,7 +71,7 @@ export function PageProfil() {
   };
 
   if (!donneesUtilisateur) {
-    return <p>Aucune donnée utilisateur disponible.</p>;
+    return <p>{t('pageProfil.noUserData')}</p>;
   }
 
   return (
@@ -84,13 +86,13 @@ export function PageProfil() {
                 className="profile-image mb-3"
               />
             </div>
-            <h3>{donneesUtilisateur.userName || 'Utilisateur inconnu'}</h3>
-            <p><strong>Email :</strong> {donneesUtilisateur.email || 'Non disponible'}</p>
+            <h3>{donneesUtilisateur.userName || t('pageProfil.unknownUser')}</h3>
+            <p><strong>{t('pageProfil.email')}:</strong> {donneesUtilisateur.email || t('pageProfil.notAvailable')}</p>
             {userId === donneesUtilisateur.id && (
               <>
-                <Button variant="primary" onClick={handleEditClick}>Modifier le profil</Button>
+                <Button variant="primary" onClick={handleEditClick}>{t('pageProfil.editProfile')}</Button>
                 <Button variant="danger" className="mt-2" onClick={() => handleDeleteAccount(usersApi, gestionLocalStorage)}>
-                  Supprimer le compte
+                  {t('pageProfil.deleteAccount')}
                 </Button>
               </>
             )}
@@ -108,11 +110,11 @@ export function PageProfil() {
       {posts.length > 0 ? (
         posts.map((post, index) => <CartePublication key={index} post={post} />)
       ) : (
-        <p>Aucun post disponible.</p>
+        <p>{t('pageProfil.noPosts')}</p>
       )}
       <Modal show={showModal} onHide={handleCloseModal} autoFocus backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>Modifier le profil</Modal.Title>
+          <Modal.Title>{t('pageProfil.editProfile')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormulaireProfil
@@ -122,9 +124,9 @@ export function PageProfil() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>Annuler</Button>
+          <Button variant="secondary" onClick={handleCloseModal}>{t('pageProfil.cancel')}</Button>
           <Button variant="primary" onClick={() => handleSaveChanges(usersApi, formData, donneesUtilisateur, setShowModal)}>
-            Enregistrer
+            {t('pageProfil.saveChanges')}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,0 +1,106 @@
+{
+  "connexion": {
+    "title": "Iniciar sesión",
+    "usernamePlaceholder": "Nombre de usuario",
+    "passwordPlaceholder": "Contraseña",
+    "loginButton": "Iniciar sesión",
+    "createAccount": "Crear una cuenta",
+    "changeLanguage": "Cambiar idioma"
+  },
+  "description": {
+    "title": "Vibe Connect",
+    "subtext": "Únete a VibeConnect: comparte vibras positivas y crea conexiones auténticas!"
+  },
+  "accueil": {
+    "title": "Feed de noticias de tus suscripciones",
+    "noPosts": "No hay publicaciones para mostrar.",
+    "errorFetchingPosts": "Error al obtener las publicaciones de las suscripciones:",
+    "noUserConnected": "Ningún usuario conectado."
+  },
+  "inscription": {
+    "title": "Crear una cuenta",
+    "nomPlaceholder": "Apellido",
+    "prenomPlaceholder": "Nombre",
+    "usernamePlaceholder": "Tu nombre de usuario",
+    "emailPlaceholder": "Correo electrónico",
+    "passwordPlaceholder": "Tu contraseña",
+    "signupButton": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?"
+  },
+  "mesPublications": {
+    "deleteAllPosts": "Eliminar todas mis publicaciones",
+    "noPosts": "No hay publicaciones disponibles."
+  },
+  "pageProfil": {
+    "error": "Error",
+    "imageUploadError": "Ocurrió un error al subir la imagen ({name}).",
+    "noUserData": "No hay datos de usuario disponibles.",
+    "unknownUser": "Usuario desconocido",
+    "email": "Correo electrónico",
+    "notAvailable": "No disponible",
+    "editProfile": "Editar perfil",
+    "deleteAccount": "Eliminar cuenta",
+    "noPosts": "No hay publicaciones disponibles.",
+    "cancel": "Cancelar",
+    "saveChanges": "Guardar cambios"
+  },
+  "toutesLesPublications": {
+    "noPublications": "No hay publicaciones disponibles.",
+    "loadMore": "Siguiente"
+  },
+  "barreNavigation": {
+    "errorFetchingUser": "Error al obtener la información del usuario:",
+    "unknownUser": "Usuario desconocido",
+    "brand": "Vibe Connect",
+    "home": "Inicio",
+    "allPosts": "Todas las publicaciones",
+    "myPosts": "Mis publicaciones",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión"
+  },
+  "carteCreationPublication": {
+    "addPost": "Agregar una publicación",
+    "textPlaceholder": "Ingrese su texto aquí...",
+    "selectedImageAlt": "Imagen seleccionada",
+    "placeholderImageAlt": "Imagen predeterminada",
+    "chooseImage": "Elegir una imagen",
+    "publish": "Publicar"
+  },
+  "cartePublication": {
+    "unknownUser": "Usuario desconocido",
+    "follows": "seguimiento(s)",
+    "publishedOn": "Publicado el",
+    "likes": "me gusta(s)",
+    "comments": "comentario(s)",
+    "addComment": "Agregar un comentario",
+    "noComments": "Aún no hay comentarios.",
+    "showMore": "Mostrar más",
+    "showLess": "Mostrar menos",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "commentaire": {
+    "unknownUser": "Usuario desconocido",
+    "noContent": "No hay contenido disponible",
+    "delete": "Eliminar"
+  },
+  "formulaireEdition": {
+    "editImage": "Editar imagen",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "formulaireProfil": {
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "userName": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Déjelo en blanco para no cambiarlo",
+    "bio": "Biografía",
+    "profilePicture": "Foto de perfil",
+    "bannerPicture": "Banner"
+  },
+  "languageFrench": "Francés",
+  "languageEnglish": "Inglés",
+  "languageSpanish": "Español"
+}

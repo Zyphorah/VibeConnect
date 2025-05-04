@@ -6,8 +6,10 @@ import './Css/navbar.css';
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
 import { UsersAPI } from '../Api/UsersAPI.js';
+import { useTranslation } from 'react-i18next';
 
 export function BarreNavigation() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { url, key } = useContext(ApiConfigContext);
     const gestionLocalStorage = new GestionLocalStorage();
@@ -22,12 +24,12 @@ export function BarreNavigation() {
                     setUserData(data);
                 })
                 .catch((error) => {
-                    console.error("Erreur lors de la récupération des informations utilisateur :", error);
+                    console.error(t('barreNavigation.errorFetchingUser'), error);
                 });
         }
-    }, [currentUserId, key, url]);
+    }, [currentUserId, key, url, t]);
 
-    const nomUtilisateur = userData?.userName || "Utilisateur inconnu";
+    const nomUtilisateur = userData?.userName || t('barreNavigation.unknownUser');
     const photoProfil = userData?.profilePicture || "https://via.placeholder.com/150";
   
     return (
@@ -35,34 +37,40 @@ export function BarreNavigation() {
             <Navbar expand="lg" variant="dark" className="custom-navbar">
                 <Container className="d-flex justify-content-between align-items-center">
                     <Navbar.Brand as={Link} to="/Accueil" className="custom-navbar-brand" id="logo" style={{ marginRight: '20px' }}>
-                        Vibe Connect
+                        {t('barreNavigation.brand')}
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarNav" />
                     <Navbar.Collapse id="navbarNav" className="justify-content-center flex-row">
                         <Nav>
-                        <Nav.Link as={Link} to="/Accueil" className="text-white" style={{ marginRight: '20px' }}>Accueil</Nav.Link>
-                            <Nav.Link as={Link} to="/ToutesLesPublications" className="text-white" style={{ marginRight: '20px' }}>Toutes les publications</Nav.Link>
-                            <Nav.Link as={Link} to="/MesPublications" className="text-white" style={{ marginRight: '20px' }}>Mes publications</Nav.Link>
+                            <Nav.Link as={Link} to="/Accueil" className="text-white" style={{ marginRight: '20px' }}>
+                                {t('barreNavigation.home')}
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/ToutesLesPublications" className="text-white" style={{ marginRight: '20px' }}>
+                                {t('barreNavigation.allPosts')}
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/MesPublications" className="text-white" style={{ marginRight: '20px' }}>
+                                {t('barreNavigation.myPosts')}
+                            </Nav.Link>
                             <Nav.Link
                                 onClick={() => navigate("/Profil", { state: { userData } })}
                                 className="text-white"
                                 style={{ cursor: 'pointer', marginRight: '20px' }}
                             >
-                                Profil
+                                {t('barreNavigation.profile')}
                             </Nav.Link>
-                        <Nav.Link 
-                            as={Link} 
-                            to="/Connexion" 
-                            className="text-white" 
-                            style={{ marginRight: '20px' }}
-                            onClick={() => {
-                                gestionLocalStorage.supprimer('token');
-                                gestionLocalStorage.supprimer('id');
-                                navigate("/Connexion");
-                            }}
-                        >
-                            Déconnexion
-                        </Nav.Link>
+                            <Nav.Link 
+                                as={Link} 
+                                to="/Connexion" 
+                                className="text-white" 
+                                style={{ marginRight: '20px' }}
+                                onClick={() => {
+                                    gestionLocalStorage.supprimer('token');
+                                    gestionLocalStorage.supprimer('id');
+                                    navigate("/Connexion");
+                                }}
+                            >
+                                {t('barreNavigation.logout')}
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                     
@@ -74,7 +82,6 @@ export function BarreNavigation() {
                         style={{ cursor: 'pointer', width: '40px', height: '40px', borderRadius: '50%', marginLeft: '20px' }}
                     />
                     <h1 id="nomUtilisateur">{nomUtilisateur}</h1>
-                   
                 </Container>
             </Navbar>
         </header>

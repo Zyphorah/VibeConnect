@@ -14,8 +14,10 @@ import FormulaireEdition from './FormulaireEdition';
 import { sauvegarderEdition } from './Logic/CarteCreationPublicationLogic.js';
 import { FaBell } from 'react-icons/fa';
 import { FollowersApi } from '../Api/FollowersApi.js';
+import { useTranslation } from 'react-i18next';
 
 export function CartePublication({ post, onDelete }) {
+  const { t } = useTranslation();
   const navigate = useNavigate(); 
   const { url, key } = useContext(ApiConfigContext);
   const currentUserId = new GestionLocalStorage().recuperer('id');
@@ -31,7 +33,7 @@ export function CartePublication({ post, onDelete }) {
   const followersApi = new FollowersApi(key, url);
 
   const { owner: auteur, content, imageUrl, likes = [], comments = [], createdAt, id } = post;
-  const nomAuteur = auteur?.userName || "Utilisateur inconnu";
+  const nomAuteur = auteur?.userName || t('cartePublication.unknownUser');
   const photoProfil = auteur?.profilePicture || "https://via.placeholder.com/150";
 
   useEffect(() => {
@@ -99,7 +101,7 @@ export function CartePublication({ post, onDelete }) {
                 onClick={toggleFollow}
                 style={{ cursor: 'pointer', color: isFollowing ? 'green' : 'grey', marginLeft: '10px' }}
               />
-              <span className="ms-1">{followerCount} follow(s)</span>
+              <span className="ms-1">{followerCount} {t('cartePublication.follows')}</span>
             </>
           )}
         </div>
@@ -125,7 +127,7 @@ export function CartePublication({ post, onDelete }) {
         )}
 
         <div className="mt-2">
-          <small className="text-muted">Publié le : {createdAt ? new Date(createdAt).toLocaleString() : ""}</small>
+          <small className="text-muted">{t('cartePublication.publishedOn')} : {createdAt ? new Date(createdAt).toLocaleString() : ""}</small>
         </div>
 
         <div className="d-flex align-items-center mt-2">
@@ -135,13 +137,13 @@ export function CartePublication({ post, onDelete }) {
             id="like-icon"
             onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} 
           />
-          <span className="ms-1">{likes.length} J'aime</span>
-          <span className="ms-3">{comments.length} commentaire(s)</span>
+          <span className="ms-1">{likes.length} {t('cartePublication.likes')}</span>
+          <span className="ms-3">{comments.length} {t('cartePublication.comments')}</span>
         </div>
 
         <Form.Control
           type="text"
-          placeholder="Ajouter un commentaire"
+          placeholder={t('cartePublication.addComment')}
           className="mt-3"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
@@ -154,23 +156,23 @@ export function CartePublication({ post, onDelete }) {
               <Commentaire key={index} data={comment} />
             ))
           ) : (
-            <p className="text-muted">Aucun commentaire pour l'instant.</p>
+            <p className="text-muted">{t('cartePublication.noComments')}</p>
           )}
         </div>
 
         <div className="mt-3 d-flex justify-content-between">
           {comments.length > 10 && (
             <Button variant="text" onClick={() => setShowAllComments(!showAllComments)}>
-              {showAllComments ? "Afficher moins" : "Afficher plus"}
+              {showAllComments ? t('cartePublication.showLess') : t('cartePublication.showMore')}
             </Button>
           )}
           {auteur?.id === currentUserId && (
             <div>
               <Button variant="text" className="text-primary me-2" onClick={() => setIsEditing(true)}>
-                Modifier
+                {t('cartePublication.edit')}
               </Button>
               <Button variant="text" className="text-danger" onClick={() => postLogic.gererSupprimer(id, onDelete)}>
-                Supprimer
+                {t('cartePublication.delete')}
               </Button>
             </div>
           )}
