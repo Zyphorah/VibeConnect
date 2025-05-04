@@ -163,7 +163,7 @@ export function CartePublication({ post, onDelete, refresh }) {
         </div>
 
         <div className="mt-3 d-flex justify-content-between">
-          {comments.length > 10 && (
+          {comments.length > 3 && (
             <Button variant="text" onClick={() => setShowAllComments(!showAllComments)}>
               {showAllComments ? t('cartePublication.showLess') : t('cartePublication.showMore')}
             </Button>
