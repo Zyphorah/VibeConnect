@@ -9,12 +9,12 @@
   },
   "description": {
     "title": "Vibe Connect",
-    "subtext": "Únete a VibeConnect: comparte vibras positivas y crea conexiones auténticas!"
+    "subtext": "¡Únete a VibeConnect: comparte vibras positivas y crea conexiones auténticas!"
   },
   "accueil": {
-    "title": "Feed de noticias de tus suscripciones",
+    "title": "Noticias de tus suscripciones",
     "noPosts": "No hay publicaciones para mostrar.",
-    "errorFetchingPosts": "Error al obtener las publicaciones de las suscripciones:",
+    "errorFetchingPosts": "Error al obtener publicaciones de suscripciones:",
     "noUserConnected": "Ningún usuario conectado."
   },
   "inscription": {
@@ -49,7 +49,7 @@
     "loadMore": "Siguiente"
   },
   "barreNavigation": {
-    "errorFetchingUser": "Error al obtener la información del usuario:",
+    "errorFetchingUser": "Error al obtener información del usuario:",
     "unknownUser": "Usuario desconocido",
     "brand": "Vibe Connect",
     "home": "Inicio",
@@ -60,7 +60,7 @@
   },
   "carteCreationPublication": {
     "addPost": "Agregar una publicación",
-    "textPlaceholder": "Ingrese su texto aquí...",
+    "textPlaceholder": "Escribe tu texto aquí...",
     "selectedImageAlt": "Imagen seleccionada",
     "placeholderImageAlt": "Imagen predeterminada",
     "chooseImage": "Elegir una imagen",
@@ -68,9 +68,9 @@
   },
   "cartePublication": {
     "unknownUser": "Usuario desconocido",
-    "follows": "seguimiento(s)",
+    "follows": "seguidor(es)",
     "publishedOn": "Publicado el",
-    "likes": "me gusta(s)",
+    "likes": "Me gusta",
     "comments": "comentario(s)",
     "addComment": "Agregar un comentario",
     "noComments": "Aún no hay comentarios.",
@@ -95,7 +95,7 @@
     "userName": "Nombre de usuario",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "passwordPlaceholder": "Déjelo en blanco para no cambiarlo",
+    "passwordPlaceholder": "Déjalo en blanco para no cambiarlo",
     "bio": "Biografía",
     "profilePicture": "Foto de perfil",
     "bannerPicture": "Banner"

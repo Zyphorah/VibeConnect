@@ -12,7 +12,7 @@
     "subtext": "Join VibeConnect: share positive vibes and create authentic connections!"
   },
   "accueil": {
-    "title": "News feed of your subscriptions",
+    "title": "Your subscriptions' news feed",
     "noPosts": "No posts to display.",
     "errorFetchingPosts": "Error fetching subscription posts:",
     "noUserConnected": "No user connected."
@@ -68,9 +68,9 @@
   },
   "cartePublication": {
     "unknownUser": "Unknown user",
-    "follows": "follow(s)",
+    "follows": "follower(s)",
     "publishedOn": "Published on",
-    "likes": "like(s)",
+    "likes": "Like",
     "comments": "comment(s)",
     "addComment": "Add a comment",
     "noComments": "No comments yet.",

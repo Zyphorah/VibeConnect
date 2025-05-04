@@ -5,15 +5,25 @@ import {
     MDBIcon,
     MDBBtn
 } from 'mdb-react-ui-kit';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage';
 
 export function PiedDePage() {
     const { t, i18n } = useTranslation();
+    const gestionLocalStorage = new GestionLocalStorage();
+
+    useEffect(() => {
+        const savedLangue = gestionLocalStorage.recuperer("langue");
+        if (savedLangue) {
+            i18n.changeLanguage(savedLangue);
+        }
+    }, [i18n]);
 
     const changerLangue = (event) => {
-        const nouvelleLangue = event.target.value;
+        let nouvelleLangue = event.target.value;
         i18n.changeLanguage(nouvelleLangue);
+        gestionLocalStorage.sauvegarder("langue", nouvelleLangue);
     };
 
     return (
@@ -52,7 +62,6 @@ export function PiedDePage() {
                 >
                     <option value="fr">{t('languageFrench')}</option>
                     <option value="en">{t('languageEnglish')}</option>
-
                     <option value="es">{t('languageSpanish')}</option>
                 </select>
             </div>
