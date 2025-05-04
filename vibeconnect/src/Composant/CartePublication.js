@@ -32,7 +32,7 @@ export function CartePublication({ post, onDelete }) {
   const imageUploader = new enregistrerImage();
   const followersApi = new FollowersApi(key, url);
 
-  const { owner: auteur, content, imageUrl, likes = [], comments = [], createdAt, id } = post;
+  const { owner: auteur, content, imageUrl, likes = [], comments = [], createdAt, id } = post || {};
   const nomAuteur = auteur?.userName || t('cartePublication.unknownUser');
   const photoProfil = auteur?.profilePicture || "https://via.placeholder.com/150";
 
@@ -60,8 +60,7 @@ export function CartePublication({ post, onDelete }) {
     }
   }, [auteur?.id, currentUserId]);
 
-  if (!post) return null;
-
+  if (!post || !auteur) return null; // Add null check for post and auteur
 
   // currentUserId (followerId, provenant du local storage) et auteur.id (followedId, de l'utilisateur suivi)
   const toggleFollow = async () => {
