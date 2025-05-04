@@ -16,7 +16,7 @@ import { FaBell } from 'react-icons/fa';
 import { FollowersApi } from '../Api/FollowersApi.js';
 import { useTranslation } from 'react-i18next';
 
-export function CartePublication({ post, onDelete }) {
+export function CartePublication({ post, onDelete }){
   const { t } = useTranslation();
   const navigate = useNavigate(); 
   const { url, key } = useContext(ApiConfigContext);
