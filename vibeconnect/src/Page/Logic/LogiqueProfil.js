@@ -27,7 +27,7 @@ export async function handleSaveChanges(usersApi, formData, donneesUtilisateur, 
       formData.profilePicture || donneesUtilisateur.profilePicture,
       formData.bio,
       formData.password || null, // Inclure le mot de passe uniquement s'il est modifié
-      formData.bannerPicture || donneesUtilisateur.bannerPicture
+      "https://i.ibb.co/mFyNXC6L/images.jpg"
     );
 
     if (response && response.success) {

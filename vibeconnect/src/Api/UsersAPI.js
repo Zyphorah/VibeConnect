@@ -45,7 +45,7 @@ export class UsersAPI extends Requete
             profilePicture,
             bio,
             password,
-            bannerPicture,
+            bannerPicture
         }, true);
     }
 

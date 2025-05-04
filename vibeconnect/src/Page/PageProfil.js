@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Container, Row, Col, Image, Modal, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import './Css/PageProfil.css';
 import Markdown from 'react-markdown';
 import { CartePublication } from '../Composant/CartePublication.js';
-import { useEffect, useState, useContext } from 'react';
-import { PostsApi } from '../Api/PostsApi.js'; 
+import { PostsApi } from '../Api/PostsApi.js';
 import { ApiConfigContext } from '../Context/ApiContext.js';
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
 import { UsersAPI } from '../Api/UsersAPI.js';
@@ -20,12 +19,12 @@ export function PageProfil() {
   const emplacement = useLocation();
   const donneesUtilisateur = emplacement.state?.userData;
   const { url, key } = useContext(ApiConfigContext);
-  const postApi = new PostsApi(key, url); 
+  const postApi = new PostsApi(key, url);
   const usersApi = new UsersAPI(key, url);
   const gestionLocalStorage = new GestionLocalStorage();
   const userId = gestionLocalStorage.recuperer('id');
   const [posts, setPosts] = useState([]);
-  const [isPostsLoaded, setIsPostsLoaded] = useState(false); 
+  const [isPostsLoaded, setIsPostsLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     userName: donneesUtilisateur?.userName || null,
@@ -33,8 +32,11 @@ export function PageProfil() {
     bio: donneesUtilisateur?.bio || null,
     firstName: donneesUtilisateur?.firstName || null,
     lastName: donneesUtilisateur?.lastName || null,
+    profilePicture: donneesUtilisateur?.profilePicture || null,
+    bannerPicture: donneesUtilisateur?.bannerPicture || null,
     password: null,
   });
+  const [userData, setUserData] = useState(donneesUtilisateur);
   const imageUploader = new enregistrerImage();
 
   const handleFileChange = async (e) => {
@@ -42,7 +44,8 @@ export function PageProfil() {
     if (files && files[0]) {
       try {
         const imageUrl = await imageUploader.enregistrerImage(files[0]);
-        setFormData(prev => ({ ...prev, [name]: imageUrl }));
+        setFormData((prev) => ({ ...prev, [name]: imageUrl }));
+        setUserData((prev) => ({ ...prev, [name]: imageUrl })); 
       } catch (error) {
         Swal.fire(t('pageProfil.error'), t('pageProfil.imageUploadError', { name }), 'error');
       }
@@ -53,21 +56,30 @@ export function PageProfil() {
     const fetchPosts = async () => {
       try {
         const result = await postApi.recupererTousLesPosts(true);
-        const userPosts = result.posts.filter(post => post.owner?.id === donneesUtilisateur.id);
+        const userPosts = result.posts.filter((post) => post.owner?.id === donneesUtilisateur.id);
         setPosts(userPosts);
         setIsPostsLoaded(true);
       } catch (error) {
-        console.error("Erreur lors de la récupération des posts:", error);
+        console.error('Erreur lors de la récupération des posts:', error);
       }
     };
     if (userId && !isPostsLoaded) fetchPosts();
-  }, [postApi, userId, donneesUtilisateur, isPostsLoaded]); 
+  }, [postApi, userId, donneesUtilisateur, isPostsLoaded]);
 
   const handleEditClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSaveProfileChanges = async () => {
+    try {
+      await handleSaveChanges(usersApi, formData, donneesUtilisateur, setShowModal);
+      setUserData((prev) => ({ ...prev, ...formData })); // Mettre à jour les données locales après sauvegarde
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde des modifications:', error);
+    }
   };
 
   if (!donneesUtilisateur) {
@@ -81,17 +93,25 @@ export function PageProfil() {
           <Col md={4} className="text-center left-section">
             <div className="image-container">
               <Image
-                src={donneesUtilisateur.profilePicture || 'Visage.png'}
+                src={userData.profilePicture || 'Visage.png'}
                 roundedCircle
                 className="profile-image mb-3"
               />
             </div>
-            <h3>{donneesUtilisateur.userName || t('pageProfil.unknownUser')}</h3>
-            <p><strong>{t('pageProfil.email')}:</strong> {donneesUtilisateur.email || t('pageProfil.notAvailable')}</p>
+            <h3>{userData.userName || t('pageProfil.unknownUser')}</h3>
+            <p>
+              <strong>{t('pageProfil.email')}:</strong> {userData.email || t('pageProfil.notAvailable')}
+            </p>
             {userId === donneesUtilisateur.id && (
               <>
-                <Button variant="primary" onClick={handleEditClick}>{t('pageProfil.editProfile')}</Button>
-                <Button variant="danger" className="mt-2" onClick={() => handleDeleteAccount(usersApi, gestionLocalStorage)}>
+                <Button variant="primary" onClick={handleEditClick}>
+                  {t('pageProfil.editProfile')}
+                </Button>
+                <Button
+                  variant="danger"
+                  className="mt-2"
+                  onClick={() => handleDeleteAccount(usersApi, gestionLocalStorage)}
+                >
                   {t('pageProfil.deleteAccount')}
                 </Button>
               </>
@@ -99,11 +119,11 @@ export function PageProfil() {
           </Col>
           <Col md={7}>
             <Image
-              src={donneesUtilisateur.bannerPicture || '/default-banner.jpg'}
+              src={userData.bannerPicture || '/default-banner.jpg'}
               className="banner-image mb-3"
               style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'cover' }}
             />
-            <Markdown>{donneesUtilisateur.bio}</Markdown>
+            <Markdown>{userData.bio}</Markdown>
           </Col>
         </Row>
       </Container>
@@ -124,8 +144,10 @@ export function PageProfil() {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>{t('pageProfil.cancel')}</Button>
-          <Button variant="primary" onClick={() => handleSaveChanges(usersApi, formData, donneesUtilisateur, setShowModal)}>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            {t('pageProfil.cancel')}
+          </Button>
+          <Button variant="primary" onClick={handleSaveProfileChanges}>
             {t('pageProfil.saveChanges')}
           </Button>
         </Modal.Footer>
