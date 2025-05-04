@@ -27,7 +27,8 @@ function Accueil() {
   }, [id, key, url]);
 
   return (
-    <div>
+    <div id="fileActualite">
+      <h1 style={{ textAlign: "center" }}>File d'actualité de vos abonnements</h1>
       {dataPosts.posts && Array.isArray(dataPosts.posts) && dataPosts.posts.length > 0 ? (
         dataPosts.posts.map((publication, index) => (
           <CartePublication key={index} post={publication} />
