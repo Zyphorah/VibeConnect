@@ -7,7 +7,7 @@ export class PostsApi extends Requete
     }
 
     async recupererPostsDesAbonnements(followerId) {
-        return await this.faireRequete(`/Posts/FromFollowers/${followerId}`, 'GET');
+        return await this.faireRequete(`/Posts/FromFollowers/${followerId}?addComments=true&addLikes=true`, 'GET');
     }
 
     async recupererPostParId(id) {
