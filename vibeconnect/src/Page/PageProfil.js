@@ -25,6 +25,7 @@ export function PageProfil() {
   const userId = gestionLocalStorage.recuperer('id');
   const [posts, setPosts] = useState([]);
   const [isPostsLoaded, setIsPostsLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false); // Ajout de l'état refresh
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     userName: donneesUtilisateur?.userName || null,
@@ -52,6 +53,10 @@ export function PageProfil() {
     }
   };
 
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev); // Fonction pour rafraîchir
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -63,8 +68,8 @@ export function PageProfil() {
         console.error('Erreur lors de la récupération des posts:', error);
       }
     };
-    if (userId && !isPostsLoaded) fetchPosts();
-  }, [postApi, userId, donneesUtilisateur, isPostsLoaded]);
+    if (userId) fetchPosts();
+  }, [postApi, userId, donneesUtilisateur, refresh]); // Ajout de refresh comme dépendance
 
   const handleEditClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -128,7 +133,9 @@ export function PageProfil() {
         </Row>
       </Container>
       {posts.length > 0 ? (
-        posts.map((post, index) => <CartePublication key={index} post={post} />)
+        posts.map((post, index) => (
+          <CartePublication key={index} post={post} refresh={handleRefresh} />
+        ))
       ) : (
         <p>{t('pageProfil.noPosts')}</p>
       )}
