@@ -16,7 +16,7 @@ import { FaBell } from 'react-icons/fa';
 import { FollowersApi } from '../Api/FollowersApi.js';
 import { useTranslation } from 'react-i18next';
 
-export function CartePublication({ post, onDelete }){
+export function CartePublication({ post, onDelete, refresh }) {
   const { t } = useTranslation();
   const navigate = useNavigate(); 
   const { url, key } = useContext(ApiConfigContext);
@@ -60,7 +60,7 @@ export function CartePublication({ post, onDelete }){
     }
   }, [auteur?.id, currentUserId]);
 
-  if (!post || !auteur) return null; // Add null check for post and auteur
+  if (!post || !auteur) return null; 
 
   // currentUserId (followerId, provenant du local storage) et auteur.id (followedId, de l'utilisateur suivi)
   const toggleFollow = async () => {
@@ -134,7 +134,7 @@ export function CartePublication({ post, onDelete }){
             src="like.png"
             alt="Like"
             id="like-icon"
-            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id)} 
+            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id,refresh)} 
           />
           <span className="ms-1">{likes.length} {t('cartePublication.likes')}</span>
           <span className="ms-3">{comments.length} {t('cartePublication.comments')}</span>
@@ -146,13 +146,13 @@ export function CartePublication({ post, onDelete }){
           className="mt-3"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
-          onKeyDown={(e) => postLogic.gererAjouterCommentaire(e, commentText, setCommentText, id)}
+          onKeyDown={(e) => postLogic.gererAjouterCommentaire(e, commentText, setCommentText, id, refresh)}
         />
 
         <div className="mt-3">
           {comments.length > 0 ? (
             (showAllComments ? comments : comments.slice(0, 3)).map((comment, index) => (
-              <Commentaire key={index} data={comment} />
+              <Commentaire key={index} data={comment} refresh={refresh} />
             ))
           ) : (
             <p className="text-muted">{t('cartePublication.noComments')}</p>
@@ -170,7 +170,7 @@ export function CartePublication({ post, onDelete }){
               <Button variant="text" className="text-primary me-2" onClick={() => setIsEditing(true)}>
                 {t('cartePublication.edit')}
               </Button>
-              <Button variant="text" className="text-danger" onClick={() => postLogic.gererSupprimer(id, onDelete)}>
+              <Button variant="text" className="text-danger" onClick={() => postLogic.gererSupprimer(id, onDelete,refresh)}>
                 {t('cartePublication.delete')}
               </Button>
             </div>

@@ -6,11 +6,16 @@ import { commentsApi } from '../Api/commentsApi';
 import { gererSupprimer } from './Logic/gererSupprimer.js';
 import { useTranslation } from 'react-i18next';
 
-export function Commentaire({ data, onCommentDeleted }) {
+export function Commentaire({ data, onCommentDeleted, refresh }) {
   const { t } = useTranslation();
   const { url, key } = useContext(ApiConfigContext); 
   const api = new commentsApi(key, url); 
   const currentUserId = new GestionLocalStorage().recuperer('id');
+
+  const handleDelete = () => {
+    gererSupprimer(api, data, onCommentDeleted);
+    refresh();
+  };
 
   return (
     <div className="boite-commentaire mt-3 p-2">
@@ -28,7 +33,7 @@ export function Commentaire({ data, onCommentDeleted }) {
           <Button
             variant="text"
             className="text-danger p-0"
-            onClick={() => gererSupprimer(api, data, onCommentDeleted)}
+            onClick={() => handleDelete()}
           >
             {t('commentaire.delete')}
           </Button>

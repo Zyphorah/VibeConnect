@@ -2,14 +2,12 @@ import { useEffect, useState, useContext } from 'react';
 import { PostsApi } from '../../Api/PostsApi.js'; 
 import { ApiConfigContext } from '../../Context/ApiContext.js';
 
-export function useAccueilLogic() {
+export function useAccueilLogic(refresh, setRefresh) {
     const { url, key } = useContext(ApiConfigContext);
     const apiPublication = new PostsApi(key, url); 
     const [publications, setPublications] = useState(null);
 
     useEffect(() => {
-        if (publications !== null) return;
-
         const recupererPublications = async () => {
             try {
                 const resultat = await apiPublication.recupererTousLesPosts();
@@ -24,7 +22,7 @@ export function useAccueilLogic() {
             setPublications(donnees);
             console.log("Publications récupérées:", donnees);
         });
-    }, [apiPublication, publications]);
+    }, [apiPublication, refresh]);
 
-    return { publications };
+    return { publications, setRefresh };
 }

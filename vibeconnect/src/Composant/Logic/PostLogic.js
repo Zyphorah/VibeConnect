@@ -5,29 +5,31 @@ export class PostLogic {
     this.postApi = postApi;
   }
 
-  async gererToggleLike(likes, currentUserId, postId) { // Renamed `id` to `postId` for clarity
+  async gererToggleLike(likes, currentUserId, postId,refresh) { 
     const utilisateurAimeDeja = likes.some(like => like.userId === currentUserId);
     try {
       utilisateurAimeDeja
-        ? await this.likesApiInstance.supprimerLike(postId) // Use `postId` for deletion
-        : await this.likesApiInstance.ajouterLike(postId, currentUserId); // Use `postId` for addition
+        ? await this.likesApiInstance.supprimerLike(postId) 
+        : await this.likesApiInstance.ajouterLike(postId, currentUserId); 
+        refresh(); 
     } catch (error) {
       console.error("Erreur lors de la gestion du like :", error);
     }
   }
 
-  async gererAjouterCommentaire(event, commentText, setCommentText, id) {
+  async gererAjouterCommentaire(event, commentText, setCommentText, id, refresh) {
     if (event.key === "Enter" && commentText.trim()) {
       try {
         await this.commentsApiInstance.ajouterCommentaire(id, commentText);
         setCommentText("");
+        refresh();
       } catch (error) {
         console.error("Erreur lors de l'ajout du commentaire :", error);
       }
     }
   }
 
-  async gererSupprimer(id, onDelete) {
+  async gererSupprimer(id, onDelete, refresh) {
     const Swal = (await import('sweetalert2')).default;
     Swal.fire({
       title: 'Êtes-vous sûr ?',
@@ -41,6 +43,7 @@ export class PostLogic {
         try {
           onDelete ? onDelete(id) : await this.postApi.supprimerPost(id);
           Swal.fire('Supprimé!', 'La publication a été supprimée.', 'success');
+          refresh();
         } catch (error) {
           Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression.', 'error');
         }
@@ -48,10 +51,11 @@ export class PostLogic {
     });
   }
 
-  async gererModifierPublication(postId, content, imageUrl, onSuccess) {
+  async gererModifierPublication(postId, content, imageUrl, onSuccess,refresh) {
     try {
       await this.postApi.mettreAJourPublication(postId, content, imageUrl); 
       if (onSuccess) onSuccess();
+      refresh();
     } catch (error) {
       console.error("Erreur lors de la modification de la publication:", error);
     }

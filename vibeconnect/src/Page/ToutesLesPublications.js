@@ -6,18 +6,23 @@ import { useTranslation } from 'react-i18next';
 
 export function ToutesLesPublications() {
     const { t } = useTranslation();
-    const { publications } = useAccueilLogic();
+    const [refresh, setRefresh] = useState(false);
+    const { publications } = useAccueilLogic(refresh, setRefresh);
     const [visiblePosts, setVisiblePosts] = useState(5);
 
     const handleLoadMore = () => {
         setVisiblePosts((prev) => prev + 5);
     };
 
+    const handleRefresh = () => {
+        setRefresh((prev) => !prev);
+    };
+
     return (
         <div>
             {publications && publications.length > 0 ? (
                 publications.slice(0, visiblePosts).map((publication, index) => (
-                    <CartePublication key={index} post={publication} />
+                    <CartePublication key={index} post={publication} refresh={handleRefresh} />
                 ))
             ) : (
                 <p>{t('toutesLesPublications.noPublications')}</p>

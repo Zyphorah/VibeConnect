@@ -9,9 +9,14 @@ function Accueil() {
   const { t } = useTranslation();
   const { url, key } = useContext(ApiContext);
   const [dataPosts, setDataUsers] = useState({});
+  const [refresh, setRefresh] = useState(false);
   const gestionLocalStorage = new GestionLocalStorage();
   const id = gestionLocalStorage.recuperer("id");
   const postsApi = new PostsApi(key, url);
+
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev);
+  };
 
   useEffect(() => {
     if (id) {
@@ -26,15 +31,15 @@ function Accueil() {
     } else {
       console.log(t('accueil.noUserConnected'));
     }
-  }, [id, key, url, t]);
+  }, [id, key, url, t, refresh]);
 
   return (
     <div id="fileActualite">
       <h1 style={{ textAlign: "center" }}>{t('accueil.title')}</h1>
       
-    {dataPosts && dataPosts.posts && Array.isArray(dataPosts.posts) && dataPosts.posts.length > 0 ? (
+      {dataPosts && dataPosts.posts && Array.isArray(dataPosts.posts) && dataPosts.posts.length > 0 ? (
       dataPosts.posts.map((publication, index) => (
-        <CartePublication key={index} post={publication} />
+        <CartePublication key={index} post={publication} refresh={handleRefresh} />
       ))
     ) : (
       <div>{t('accueil.noPosts')}</div>

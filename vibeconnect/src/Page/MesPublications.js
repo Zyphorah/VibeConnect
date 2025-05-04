@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CartePublication } from '../Composant/CartePublication.js';
 import CarteCreationPublication from '../Composant/CarteCreationPublication.js';
 import { useSesPublicationLogic } from './Logic/SesPublicationLogic.js';
@@ -7,7 +7,12 @@ import { useTranslation } from 'react-i18next';
 
 export function SesPublication() {
   const { t } = useTranslation();
-  const { posts, setPosts, supprimerTousLesPosts } = useSesPublicationLogic();
+  const [refresh, setRefresh] = useState(false); // Ajout de l'état refresh
+  const { posts, setPosts, supprimerTousLesPosts } = useSesPublicationLogic(refresh);
+
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev); // Fonction pour rafraîchir
+  };
 
   return (
     <div>
@@ -16,14 +21,19 @@ export function SesPublication() {
       <div className="d-flex justify-content-center my-3">
         <Button
           variant="danger"
-          onClick={supprimerTousLesPosts}
+          onClick={() => {
+            supprimerTousLesPosts();
+            handleRefresh(); // Rafraîchir après suppression
+          }}
         >
           {t('mesPublications.deleteAllPosts')}
         </Button>
       </div>
       
       {posts.length > 0 ? (
-        posts.map((post, index) => <CartePublication key={index} post={post} />)
+        posts.map((post, index) => (
+          <CartePublication key={index} post={post} refresh={handleRefresh} />
+        ))
       ) : (
         <p>{t('mesPublications.noPosts')}</p>
       )}
