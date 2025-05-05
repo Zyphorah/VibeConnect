@@ -41,8 +41,8 @@ export function Inscription() {
             <h2 className="connexion-title">{t('inscription.title')}</h2>
             <Form className="FormulaireConnexion">
               <Form.Group className="mb-3 conteneurNom">
+              <Form.Control type="text" placeholder={t('inscription.prenomPlaceholder')} className="input-field" onChange={(e) => setPrenom(e.target.value)} />
                 <Form.Control type="text" placeholder={t('inscription.nomPlaceholder')} className="input-field" onChange={(e) => setNom(e.target.value)} />
-                <Form.Control type="text" placeholder={t('inscription.prenomPlaceholder')} className="input-field" onChange={(e) => setPrenom(e.target.value)} />
               </Form.Group>
 
               <Form.Group controlId="formUsername" className="mb-3">
