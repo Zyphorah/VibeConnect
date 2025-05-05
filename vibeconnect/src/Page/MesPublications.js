@@ -4,8 +4,10 @@ import CarteCreationPublication from '../Composant/CarteCreationPublication.js';
 import { useSesPublicationLogic } from './Logic/MesPublicationLogic.js';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useBlockAcces } from '../Acces/GestionnaireAcces.js';
 
 export function SesPublication() {
+  useBlockAcces();
   const { t } = useTranslation();
   const [refresh, setRefresh] = useState(false); // Ajout de l'état refresh
   const { posts, setPosts, supprimerTousLesPosts } = useSesPublicationLogic(refresh);

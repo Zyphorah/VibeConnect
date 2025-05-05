@@ -9,6 +9,7 @@ import { GestionButtonConnexion } from "./Logic/GestionConnexion.js";
 import { useTranslation } from 'react-i18next'; 
 import "../Langue/i18n"; 
 import "./Css/Formulaire/Connexion.css";
+import { useConnexion } from "../Acces/GestionnaireAcces.js";
 
 import fr from '../Langue/Locales/fr.json';
 import en from '../Langue/Locales/en.json';
@@ -21,6 +22,7 @@ i18n.addResourceBundle('en', 'translation', en, true, true);
 i18n.addResourceBundle('es', 'translation', es, true, true);
 
 export function Connexion() {
+  useConnexion();
   const { t } = useTranslation(); 
   const { url, Key } = useContext(ApiConfigContext);
   const userApi = new UsersAPI(Key, url);

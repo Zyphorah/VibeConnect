@@ -4,8 +4,12 @@ import ApiContext from "../Context/ApiContext";
 import { CartePublication } from "../Composant/CartePublication";
 import { PostsApi } from "../Api/PostsApi";
 import { useTranslation } from "react-i18next";
+import { useBlockAcces } from "../Acces/GestionnaireAcces";
+
+
 
 function Accueil() {
+  useBlockAcces();
   const { t } = useTranslation();
   const { url, key } = useContext(ApiContext);
   const [dataPosts, setDataUsers] = useState({});
@@ -13,6 +17,7 @@ function Accueil() {
   const gestionLocalStorage = new GestionLocalStorage();
   const id = gestionLocalStorage.recuperer("id");
   const postsApi = new PostsApi(key, url);
+  
 
   const handleRefresh = () => {
     setRefresh((prev) => !prev);

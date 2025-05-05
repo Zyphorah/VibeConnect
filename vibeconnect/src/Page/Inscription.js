@@ -10,8 +10,10 @@ import { UsersAPI } from "../Api/UsersAPI.js";
 import { ApiConfigContext } from "../Context/ApiContext.js";
 import { useInscriptionLogic } from "./Logic/InscriptionLogic.js";
 import { useTranslation } from "react-i18next"; 
-
+import { useConnexion } from "../Acces/GestionnaireAcces.js";
 export function Inscription() {
+  useConnexion();
+
   const { t } = useTranslation();
   const { url, Key } = useContext(ApiConfigContext);
   const userApi = new UsersAPI(Key, url);

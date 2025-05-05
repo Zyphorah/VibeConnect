@@ -12,8 +12,10 @@ import FormulaireProfil from '../Composant/FormulaireProfil.js';
 import { LogiqueProfil } from './Logic/LogiqueProfil.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import { useTranslation } from 'react-i18next';
+import { useBlockAcces } from '../Acces/GestionnaireAcces.js';
 
 export function PageProfil() {
+  useBlockAcces();
   const { t } = useTranslation();
   const emplacement = useLocation();
   const donneesUtilisateur = emplacement.state?.userData;

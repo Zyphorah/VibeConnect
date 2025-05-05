@@ -3,8 +3,10 @@ import { useAccueilLogic } from './Logic/AccueilLogic.js';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap'; 
 import { useTranslation } from 'react-i18next';
+import { useBlockAcces } from '../Acces/GestionnaireAcces.js';
 
 export function ToutesLesPublications() {
+    useBlockAcces();
     const { t } = useTranslation();
     const [refresh, setRefresh] = useState(false);
     const { publications } = useAccueilLogic(refresh, setRefresh);
