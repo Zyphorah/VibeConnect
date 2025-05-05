@@ -24,7 +24,7 @@ export class CarteCreationPublicationLogic {
   }
 }
 
-export async function sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl, setIsEditing, imageUploader, postLogic }) {
+export async function sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl: setEditeImageUrl, setIsEditing: setEstEditable, imageUploader, postLogic }) {
   try {
     let finalImageUrl = editedImageUrl;
     // Recherche de l'élément file dans le formulaire
@@ -35,8 +35,8 @@ export async function sauvegarderEdition({ id, editedContent, editedImageUrl, se
     }
 
     await postLogic.gererModifierPublication(id, editedContent, finalImageUrl, () => {
-      setEditedImageUrl(finalImageUrl); 
-      setIsEditing(false);
+      setEditeImageUrl(finalImageUrl); 
+      setEstEditable(false);
     });
   } catch (error) {
     console.error("Erreur lors de la sauvegarde des modifications :", error);

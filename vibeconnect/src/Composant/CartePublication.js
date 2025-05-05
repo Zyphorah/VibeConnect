@@ -23,11 +23,11 @@ export function CartePublication({ post, onDelete, refresh }) {
   const { url, key } = useContext(ApiConfigContext);
   const currentUserId = new GestionLocalStorage().recuperer('id');
   const [commentText, setCommentText] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setEstEditable] = useState(false);
   const [editedContent, setEditedContent] = useState(post?.content || "");
   const [editedImageUrl, setEditedImageUrl] = useState(post?.imageUrl || "");
   const [showAllComments, setShowAllComments] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setEstFollow] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
   const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new PostsApi(key, url));
   const imageUploader = new enregistrerImage();
@@ -55,7 +55,7 @@ export function CartePublication({ post, onDelete, refresh }) {
       followersApi.recupererSuivisParUtilisateur(currentUserId)
         .then(data => {
           const found = data?.some(user => user.id === auteur.id);
-          setIsFollowing(found);
+          setEstFollow(found);
         })
         .catch(err => console.error(err));
     }
@@ -71,12 +71,12 @@ export function CartePublication({ post, onDelete, refresh }) {
         // Ajouter un follow : followerId = currentUserId, followedId = auteur.id
         await followersApi.ajouterSuivi(currentUserId, auteur.id);
         console.log(currentUserId," et ", auteur.id);
-        setIsFollowing(true);
+        setEstFollow(true);
         setFollowerCount(prev => prev + 1);
       } else {
         // Supprimer un follow : followerId = currentUserId, followedId = auteur.id
         await followersApi.supprimerSuivi(currentUserId, auteur.id);
-        setIsFollowing(false);
+        setEstFollow(false);
         setFollowerCount(prev => (prev > 0 ? prev - 1 : 0));
       }
     } catch (error) {
@@ -112,13 +112,13 @@ export function CartePublication({ post, onDelete, refresh }) {
             setEditedContent={setEditedContent}
             editedImageUrl={editedImageUrl}
             setEditedImageUrl={setEditedImageUrl}
-            handleSaveEdit={() => sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl, setIsEditing, imageUploader, postLogic })}
-            setIsEditing={setIsEditing}
+            handleSaveEdit={() => sauvegarderEdition({ id, editedContent, editedImageUrl, setEditedImageUrl, setIsEditing: setEstEditable, imageUploader, postLogic })}
+            setIsEditing={setEstEditable}
           />
         ) : (
           <>
             <h6 className="mb-3 fw-bold">
-              <Markdown>{content || ""}</Markdown> {/* Affichage du contenu en Markdown */}
+              <Markdown>{content || ""}</Markdown> 
             </h6>
             <Card.Img
               variant="top"
@@ -170,7 +170,7 @@ export function CartePublication({ post, onDelete, refresh }) {
           )}
           {auteur?.id === currentUserId && (
             <div>
-              <Button variant="text" className="text-primary me-2" onClick={() => setIsEditing(true)}>
+              <Button variant="text" className="text-primary me-2" onClick={() => setEstEditable(true)}>
                 {t('cartePublication.edit')}
               </Button>
               <Button variant="text" className="text-danger" onClick={() => postLogic.gererSupprimer(id, onDelete,refresh)}>
