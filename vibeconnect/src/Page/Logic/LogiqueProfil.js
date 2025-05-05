@@ -36,6 +36,14 @@ export class LogiqueProfil {
     }
   }
 
+  gererChangementInput(event, setFormData) {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
   async gererEnregistrementModifications(formData, donneesUtilisateur, setShowModal, setUserData) {
     if (!formData.userName || !formData.email || !formData.firstName || !formData.lastName) {
       Swal.fire(this.t('pageProfil.error'), this.t('pageProfil.errorAllFieldsRequired'), 'error');
