@@ -5,7 +5,7 @@ export class PostLogic {
     this.postApi = postApi;
   }
 
-  async gererToggleLike(likes, currentUserId, postId,refresh) { 
+  async gererToggleLike(likes, currentUserId, postId, refresh) { 
     const utilisateurAimeDeja = likes.some(like => like.userId === currentUserId);
     try {
       utilisateurAimeDeja
@@ -51,7 +51,7 @@ export class PostLogic {
     });
   }
 
-  async gererModifierPublication(postId, content, imageUrl, onSuccess,refresh) {
+  async gererModifierPublication(postId, content, imageUrl, onSuccess, refresh) {
     try {
       await this.postApi.mettreAJourPublication(postId, content, imageUrl); 
       if (onSuccess) onSuccess();

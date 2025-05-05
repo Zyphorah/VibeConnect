@@ -9,9 +9,8 @@ import { ApiConfigContext } from '../Context/ApiContext.js';
 import { GestionLocalStorage } from '../LocalStorage/GestionLocalStorage.js';
 import { UsersAPI } from '../Api/UsersAPI.js';
 import FormulaireProfil from '../Composant/FormulaireProfil.js';
-import { handleDeleteAccount, handleSaveChanges } from './Logic/LogiqueProfil.js';
+import { LogiqueProfil } from './Logic/LogiqueProfil.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
-import Swal from 'sweetalert2';
 import { useTranslation } from 'react-i18next';
 
 export function PageProfil() {
@@ -22,11 +21,12 @@ export function PageProfil() {
   const postApi = new PostsApi(key, url);
   const usersApi = new UsersAPI(key, url);
   const gestionLocalStorage = new GestionLocalStorage();
-  const userId = gestionLocalStorage.recuperer('id');
-  const [posts, setPosts] = useState([]);
-  const [isPostsLoaded, setIsPostsLoaded] = useState(false);
-  const [refresh, setRefresh] = useState(false); // Ajout de l'état refresh
-  const [showModal, setShowModal] = useState(false);
+  const imageUploader = new enregistrerImage();
+  const logiqueProfil = new LogiqueProfil(usersApi, postApi, gestionLocalStorage, imageUploader, t);
+
+  const [publications, setPublications] = useState([]);
+  const [rafraichir, setRafraichir] = useState(false);
+  const [afficherModal, setAfficherModal] = useState(false);
   const [formData, setFormData] = useState({
     userName: donneesUtilisateur?.userName || null,
     email: donneesUtilisateur?.email || null,
@@ -38,57 +38,13 @@ export function PageProfil() {
     password: null,
   });
   const [userData, setUserData] = useState(donneesUtilisateur);
-  const imageUploader = new enregistrerImage();
-
-  const handleFileChange = async (e) => {
-    const { name, files } = e.target;
-    if (files && files[0]) {
-      try {
-        const imageUrl = await imageUploader.enregistrerImage(files[0]);
-        setFormData((prev) => ({ ...prev, [name]: imageUrl }));
-        setUserData((prev) => ({ ...prev, [name]: imageUrl })); 
-      } catch (error) {
-        Swal.fire(t('pageProfil.error'), t('pageProfil.imageUploadError', { name }), 'error');
-      }
-    }
-  };
-
-  const handleRefresh = () => {
-    setRefresh((prev) => !prev); // Fonction pour rafraîchir
-  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const result = await postApi.recupererTousLesPosts(true);
-        const userPosts = result.posts.filter((post) => post.owner?.id === donneesUtilisateur.id);
-        setPosts(userPosts);
-        setIsPostsLoaded(true);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des posts:', error);
-      }
-    };
-    if (userId) fetchPosts();
-  }, [postApi, userId, donneesUtilisateur, refresh]); // Ajout de refresh comme dépendance
-
-  const handleEditClick = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSaveProfileChanges = async () => {
-    try {
-      await handleSaveChanges(usersApi, formData, donneesUtilisateur, setShowModal);
-      setUserData((prev) => ({ ...prev, ...formData })); // Mettre à jour les données locales après sauvegarde
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde des modifications:', error);
-    }
-  };
+    logiqueProfil.recupererPublicationsUtilisateur(donneesUtilisateur.id, setPublications, rafraichir);
+  }, [donneesUtilisateur, rafraichir]);
 
   if (!donneesUtilisateur) {
-    return <p>{t('pageProfil.noUserData')}</p>;
+    return logiqueProfil.afficherAucuneDonneeUtilisateur();
   }
 
   return (
@@ -107,20 +63,16 @@ export function PageProfil() {
             <p>
               <strong>{t('pageProfil.email')}:</strong> {userData.email || t('pageProfil.notAvailable')}
             </p>
-            {userId === donneesUtilisateur.id && (
-              <>
-                <Button variant="primary" onClick={handleEditClick}>
-                  {t('pageProfil.editProfile')}
-                </Button>
-                <Button
-                  variant="danger"
-                  className="mt-2"
-                  onClick={() => handleDeleteAccount(usersApi, gestionLocalStorage)}
-                >
-                  {t('pageProfil.deleteAccount')}
-                </Button>
-              </>
-            )}
+            <Button variant="primary" onClick={() => setAfficherModal(true)}>
+              {t('pageProfil.editProfile')}
+            </Button>
+            <Button
+              variant="danger"
+              className="mt-2"
+              onClick={() => logiqueProfil.gererSuppressionCompte()}
+            >
+              {t('pageProfil.deleteAccount')}
+            </Button>
           </Col>
           <Col md={7}>
             <Image
@@ -132,29 +84,32 @@ export function PageProfil() {
           </Col>
         </Row>
       </Container>
-      {posts.length > 0 ? (
-        posts.map((post, index) => (
-          <CartePublication key={index} post={post} refresh={handleRefresh} />
+      {publications.length > 0 ? (
+        publications.map((publication, index) => (
+          <CartePublication key={index} post={publication} refresh={() => logiqueProfil.rafraichir(setRafraichir)} />
         ))
       ) : (
         <p>{t('pageProfil.noPosts')}</p>
       )}
-      <Modal show={showModal} onHide={handleCloseModal} autoFocus backdrop="static">
+      <Modal show={afficherModal} onHide={() => setAfficherModal(false)} autoFocus backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>{t('pageProfil.editProfile')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormulaireProfil
             formData={formData}
-            handleInputChange={handleInputChange}
-            handleFileChange={handleFileChange}
+            handleInputChange={(e) => logiqueProfil.gererChangementInput(e, setFormData)}
+            handleFileChange={(e) => logiqueProfil.gererChangementFichier(e, setFormData, setUserData)}
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={() => setAfficherModal(false)}>
             {t('pageProfil.cancel')}
           </Button>
-          <Button variant="primary" onClick={handleSaveProfileChanges}>
+          <Button
+            variant="primary"
+            onClick={() => logiqueProfil.gererEnregistrementModifications(formData, donneesUtilisateur, setAfficherModal, setUserData)}
+          >
             {t('pageProfil.saveChanges')}
           </Button>
         </Modal.Footer>
