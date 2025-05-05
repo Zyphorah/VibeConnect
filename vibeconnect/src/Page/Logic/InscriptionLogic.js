@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 export function useInscriptionLogic(userApi) {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
@@ -26,6 +28,7 @@ export function useInscriptionLogic(userApi) {
 
     try {
       await userApi.creerCompte(gmail, password, username, nom, prenom, null, null, null);
+      navigate("/connexion"); 
     } catch (error) {
       if (error.message === "Le nom d'usager est déjà utilisé") {
         setMessageErreur(t('inscription.errorUsernameTaken'));
