@@ -7,7 +7,7 @@ import { ApiConfigContext } from '../Context/ApiContext.js';
 import { enregistrerImage } from '../Api/enregistrerImage.js';
 import { CarteCreationPublicationLogic } from './Logic/CarteCreationPublicationLogic.js';
 import { useTranslation } from 'react-i18next';
-import Markdown from 'react-markdown'; // Import de Markdown
+import Markdown from 'react-markdown'; 
 
 export function CarteCreationPublication({ posts = [], setPosts }) { 
   const { t } = useTranslation();

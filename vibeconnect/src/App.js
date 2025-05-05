@@ -8,7 +8,7 @@ import CartePublication from './Composant/CartePublication';
 import SesPublication from './Page/MesPublications.js';
 import ToutesLesPublications from './Page/ToutesLesPublications.js';
 import { BarreNavigation } from './Composant/BarreNavigation.js';
-import Accueil from './Page/Accueil.js'; // Correction: import par défaut pour Accueil
+import Accueil from './Page/Accueil.js'; 
 
 
 function MiseEnPageBarre() {
