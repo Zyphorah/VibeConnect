@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CartePublication } from '../Composant/CartePublication.js';
 import CarteCreationPublication from '../Composant/CarteCreationPublication.js';
-import { useSesPublicationLogic } from './Logic/SesPublicationLogic.js';
+import { useSesPublicationLogic } from './Logic/MesPublicationLogic.js';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
