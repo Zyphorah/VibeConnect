@@ -26,7 +26,7 @@ export function useSesPublicationLogic(refresh) {
     if (userId) {
       fetchPosts();
     }
-  }, [postApi, userId, refresh]); // Ajout de refresh comme dépendance
+  }, [userId, refresh]); // Ajout de refresh comme dépendance
 
   const supprimerTousLesPosts = () => {
     Swal.fire({

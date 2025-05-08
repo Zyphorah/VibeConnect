@@ -22,7 +22,7 @@ export function useAccueilLogic(refresh, setRefresh) {
             setPublications(donnees);
             console.log("Publications récupérées:", donnees);
         });
-    }, [apiPublication, refresh]);
+    }, [refresh]);
 
     return { publications, setRefresh };
 }
