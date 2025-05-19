@@ -49,6 +49,8 @@ export function PageProfil() {
     return logiqueProfil.afficherAucuneDonneeUtilisateur();
   }
 
+  const idUtilisateurConnecte = gestionLocalStorage.recuperer('userId');
+
   return (
     <>
       <Container className="page-bio my-4" style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -65,16 +67,20 @@ export function PageProfil() {
             <p>
               <strong>{t('pageProfil.email')}:</strong> {userData.email || t('pageProfil.notAvailable')}
             </p>
-            <Button variant="primary" onClick={() => setAfficherModal(true)}>
-              {t('pageProfil.editProfile')}
-            </Button>
-            <Button
-              variant="danger"
-              className="mt-2"
-              onClick={() => logiqueProfil.gererSuppressionCompte()}
-            >
-              {t('pageProfil.deleteAccount')}
-            </Button>
+            {idUtilisateurConnecte === userData.id && (
+              <>
+                <Button variant="primary" onClick={() => setAfficherModal(true)}>
+                  {t('pageProfil.editProfile')}
+                </Button>
+                <Button
+                  variant="danger"
+                  className="mt-2"
+                  onClick={() => logiqueProfil.gererSuppressionCompte()}
+                >
+                  {t('pageProfil.deleteAccount')}
+                </Button>
+              </>
+            )}
           </Col>
           <Col md={7}>
             <Image
