@@ -49,7 +49,7 @@ export function PageProfil() {
     return logiqueProfil.afficherAucuneDonneeUtilisateur();
   }
 
-  const idUtilisateurConnecte = gestionLocalStorage.recuperer('userId');
+  const idUtilisateurConnecte = gestionLocalStorage.recuperer('id');
 
   return (
     <>
