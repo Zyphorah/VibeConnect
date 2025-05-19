@@ -22,10 +22,10 @@ export function CarteCreationPublication({ posts = [], setPosts }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!contenu.trim() || !imageSelectionnee) {
+    //if (!contenu.trim() || !imageSelectionnee) {
       setMessageErreur(t('carteCreationPublication.errorMessage')); 
-      return;
-    }
+     // return;
+   // }
     setMessageErreur(''); // Réinitialiser le message d'erreur si tout est valide
     logic.gererSubmit(e, contenu, imageSelectionnee, imageApi, api, posts);
   };
