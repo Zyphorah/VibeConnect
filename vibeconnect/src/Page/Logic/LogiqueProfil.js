@@ -46,7 +46,14 @@ export class LogiqueProfil {
 
   async gererEnregistrementModifications(formData, donneesUtilisateur, setShowModal, setUserData) {
     if (!formData.userName || !formData.email || !formData.firstName || !formData.lastName) {
-      Swal.fire(this.t('pageProfil.error'), this.t('pageProfil.errorAllFieldsRequired'), 'error');
+      Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorAllFieldsRequired'), 'error');
+      return;
+    }
+
+    // Validation de l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorInvalidEmail'), 'error');
       return;
     }
 
@@ -67,8 +74,17 @@ export class LogiqueProfil {
         Swal.fire(this.t('pageProfil.success'), this.t('pageProfil.profileUpdated'), 'success');
       }
     } catch (error) {
-      console.error(this.t('pageProfil.errorUpdatingProfile'), error);
-      Swal.fire(this.t('pageProfil.error'), this.t('pageProfil.errorUnknown'), 'error');
+      // Gestion d'erreur
+      if (error.message === "Le nom d'usager est déjà utilisé") {
+        Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorUsernameTaken'), 'error');
+      } else if (error.message === "Courriel déjà utilisé par un autre usager") {
+        Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorEmailTaken'), 'error');
+      } else if (error.message && error.message.includes("Download error or resource isn't a valid image")) {
+        Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorInvalidImage'), 'error');
+      } else {
+        console.error(this.t('pageProfil.errorUpdatingProfile'), error);
+        Swal.fire(this.t('pageProfil.error'), this.t('inscription.errorUnknown'), 'error');
+      }
     } finally {
       setShowModal(false);
     }
