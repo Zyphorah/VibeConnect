@@ -134,7 +134,7 @@ export function CartePublication({ post, onDelete, refresh }) {
 
         <div className="d-flex align-items-center mt-2">
           <Image
-            src="like.png"
+            src={likes.some(like => like.userId === currentUserId) ? "likeClick.png" : "like.png"}
             alt="Like"
             id="like-icon"
             onClick={() => postLogic.gererToggleLike(likes, currentUserId, id,refresh)} 
