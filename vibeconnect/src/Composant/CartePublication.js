@@ -29,6 +29,9 @@ export function CartePublication({ post, onDelete, refresh }) {
   const [showAllComments, setShowAllComments] = useState(false);
   const [isFollowing, setEstFollow] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
+  const [localIsFollowing, setLocalIsFollowing] = useState(false);
+  const [localFollowerCount, setLocalFollowerCount] = useState(0);
+  const [localLikes, setLocalLikes] = useState(post?.likes || []);
   const postLogic = new PostLogic(new likesApi(key, url), new commentsApi(key, url), new PostsApi(key, url));
   const imageUploader = new enregistrerImage();
   const followersApi = new FollowersApi(key, url);
@@ -43,10 +46,12 @@ export function CartePublication({ post, onDelete, refresh }) {
       followersApi.recupererFollowersParUtilisateur(auteur.id)
         .then(data => {
           setFollowerCount(data?.length || 0);
+          setLocalFollowerCount(data?.length || 0);
         })
         .catch(err => {
           if (err.status === 404) {
             setFollowerCount(0);
+            setLocalFollowerCount(0);
           } else {
             console.error(err);
           }
@@ -56,14 +61,16 @@ export function CartePublication({ post, onDelete, refresh }) {
         .then(data => {
           const found = data?.some(user => user.id === auteur.id);
           setEstFollow(found);
+          setLocalIsFollowing(found);
         })
         .catch(err => console.error(err));
     }
   }, [auteur?.id, currentUserId]);
 
-  if (!post || !auteur) return null; 
+  useEffect(() => {
+    setLocalLikes(likes);
+  }, [likes]);
 
-  // currentUserId (followerId, provenant du local storage) et auteur.id (followedId, de l'utilisateur suivi)
   const toggleFollow = async () => {
     if (!auteur.id) return;
     try {
@@ -84,6 +91,49 @@ export function CartePublication({ post, onDelete, refresh }) {
     }
   };
 
+  const handleLocalLike = () => {
+    const hasLiked = localLikes.some(like => like.userId === currentUserId);
+    let updatedLikes;
+    if (hasLiked) {
+      updatedLikes = localLikes.filter(like => like.userId !== currentUserId);
+    } else {
+      updatedLikes = [...localLikes, { userId: currentUserId }];
+    }
+    setLocalLikes(updatedLikes);
+    postLogic.gererToggleLike(localLikes, currentUserId, id, refresh);
+  };
+
+  const handleLocalFollow = async () => {
+    if (!auteur.id) return;
+    if (!localIsFollowing) {
+      setLocalIsFollowing(true);
+      setLocalFollowerCount(prev => prev + 1);
+      try {
+        await followersApi.ajouterSuivi(currentUserId, auteur.id);
+        setEstFollow(true);
+        setFollowerCount(prev => prev + 1);
+      } catch (error) {
+        setLocalIsFollowing(false);
+        setLocalFollowerCount(prev => (prev > 0 ? prev - 1 : 0));
+        console.error(error);
+      }
+    } else {
+      setLocalIsFollowing(false);
+      setLocalFollowerCount(prev => (prev > 0 ? prev - 1 : 0));
+      try {
+        await followersApi.supprimerSuivi(currentUserId, auteur.id);
+        setEstFollow(false);
+        setFollowerCount(prev => (prev > 0 ? prev - 1 : 0));
+      } catch (error) {
+        setLocalIsFollowing(true);
+        setLocalFollowerCount(prev => prev + 1);
+        console.error(error);
+      }
+    }
+  };
+
+  if (!post || !auteur) return null; 
+
   return (
     <Container className="d-flex justify-content-center align-items-center vh-10 container-vibe">
       <Card className="m-3 p-4" id="carte-publication">
@@ -98,10 +148,10 @@ export function CartePublication({ post, onDelete, refresh }) {
           {currentUserId !== auteur.id && (
             <>
               <FaBell
-                onClick={toggleFollow}
-                style={{ cursor: 'pointer', color: isFollowing ? 'green' : 'grey', marginLeft: '10px' }}
+                onClick={handleLocalFollow}
+                style={{ cursor: 'pointer', color: localIsFollowing ? 'green' : 'grey', marginLeft: '10px' }}
               />
-              <span className="ms-1">{followerCount} {t('cartePublication.follows')}</span>
+              <span className="ms-1">{localFollowerCount} {t('cartePublication.follows')}</span>
             </>
           )}
         </div>
@@ -134,12 +184,12 @@ export function CartePublication({ post, onDelete, refresh }) {
 
         <div className="d-flex align-items-center mt-2">
           <Image
-            src={likes.some(like => like.userId === currentUserId) ? "likeClick.png" : "like.png"}
+            src={localLikes.some(like => like.userId === currentUserId) ? "likeClick.png" : "like.png"}
             alt="Like"
             id="like-icon"
-            onClick={() => postLogic.gererToggleLike(likes, currentUserId, id,refresh)} 
+            onClick={handleLocalLike}
           />
-          <span className="ms-1">{likes.length} {t('cartePublication.likes')}</span>
+          <span className="ms-1">{localLikes.length} {t('cartePublication.likes')}</span>
           <span className="ms-3">{comments.length} {t('cartePublication.comments')}</span>
         </div>
 
