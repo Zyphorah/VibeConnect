@@ -100,7 +100,8 @@ export function CartePublication({ post, onDelete, refresh }) {
       updatedLikes = [...localLikes, { userId: currentUserId }];
     }
     setLocalLikes(updatedLikes);
-    postLogic.gererToggleLike(localLikes, currentUserId, id, refresh);
+    // Si la méthode attend encore refresh, passer une fonction vide pour éviter l'erreur
+    postLogic.gererToggleLike(localLikes, currentUserId, id, () => {});
   };
 
   const handleLocalFollow = async () => {
