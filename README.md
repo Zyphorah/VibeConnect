@@ -1,12 +1,46 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/nGY0X5v0)
+# VibeConnect
 
-## Images
+Social media web application built with React 18.
 
-Voici les prototypes afin de concevoir le réseau social. 
+## Description
+
+VibeConnect is a social media platform where users can:
+- Create, edit, and delete posts with images
+- Like and comment on posts
+- Follow other users and view their posts
+- Manage profiles with profile pictures and bio
+- Support for French, English, and Spanish languages
+
+## Installation
+
+```bash
+cd tp-integration-Zyphorah/vibeconnect
+npm install
+npm start
+```
+
+Application opens at http://localhost:3000
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+## Technologies
+
+- React 18.2.0
+- React Router DOM 7.5.3
+- Bootstrap 5.3.5
+- i18next (multi-language)
+- React Markdown
+- SweetAlert2
+---
+
+## UI Prototype Pages
 
 ![Image 1](./PageImages/1.jpg)
 ![Image 2](./PageImages/2.jpg)
 ![Image 3](./PageImages/3.jpg)
 ![Image 4](./PageImages/4.jpg)
 ![Image 5](./PageImages/5.jpg)
-
